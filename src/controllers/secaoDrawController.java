@@ -99,7 +99,7 @@ public class secaoDrawController {
     }
 
     private void ZoomOut(ActionEvent e) {
-        if (draw.getZoom() > 1) {
+        if (draw.getZoom() > 1.1) {
             draw.Zoom(-1);
 
             secView.getScrollPaneDraw().getViewport().setViewSize(draw.getSize());
