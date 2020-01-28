@@ -11,6 +11,9 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.geom.AffineTransform;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -44,16 +47,29 @@ public class secaoDrawController {
         secView.getBtnZoomOut().addActionListener(e -> ZoomOut(e));
         secView.getBtnZoomMais().addActionListener(e -> ZoomIN(e));
         secView.getBtnAddV().addActionListener(e -> add(e));
+        secView.getTxtArea().setEnabled(false);
+        secView.getTxtCentroide().setEnabled(false);
         frame = new JFrame("Desenho da seção transversal");
         secView.getJPanelAreaDraw().setLayout(new BorderLayout());
         secView.getJPanelAreaDraw().add(draw, BorderLayout.CENTER);
         secView.getScrollPaneDraw().getViewport().setViewPosition(new Point((int) draw.getPreferredSize().getWidth() * (-1), (int) draw.getPreferredSize().getHeight()));
-
         frame.add(secView);
         frame.pack();
         frame.setIconImage(parent.getIconImage());
         frame.setLocationRelativeTo(parent);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent evt){
+                if(JOptionPane.showConfirmDialog(frame, "Tem certeza que deseja sair ?")== JOptionPane.OK_OPTION){
+                    frame.setVisible(false);
+                    parent.setVisible(true);
+                
+                }
+            }
+        });
+        
+        
         frame.setVisible(true);
 
     }
@@ -118,6 +134,10 @@ public class secaoDrawController {
             draw.updateVerticeList(sec.getVertices());
             DefaultListModel md = (DefaultListModel) secView.getJLVertices().getModel();
             md.remove(indiceX);
+            if (md.isEmpty() == true) {
+                CardLayout cl = (CardLayout) secView.getJPLists().getLayout();
+                cl.show(secView.getJPLists(), "entrada");
+            }
             if (sec.getArea() != 0) {
                 if (sec.getVertices().size() > 2) {
                     secView.getTxtArea().setText(String.format("%.2f", sec.getArea()));
@@ -131,7 +151,7 @@ public class secaoDrawController {
                     draw.setCentroide(sec.getCentroide());
                     secView.getTxtCentroide().setText("[" + String.format("%.2f", sec.getCentroide().getX()) + ";" + String.format("%.2f", sec.getCentroide().getY()) + "]");
                 } else {
-                    secView.getTxtCentroide().setText("(0;0)");
+                    secView.getTxtCentroide().setText("[0;0]");
 
                 }
             }
@@ -139,6 +159,8 @@ public class secaoDrawController {
         } else {
             JOptionPane.showMessageDialog(frame, "Selecione um vértice", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
+
     }
+
 
 }

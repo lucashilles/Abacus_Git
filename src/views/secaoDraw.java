@@ -261,21 +261,27 @@ public class secaoDraw extends javax.swing.JPanel {
         jPanel1.setPreferredSize(new java.awt.Dimension(600, 30));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
+        jLabel1.setBackground(new java.awt.Color(0, 51, 51));
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("AREA:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         jPanel1.add(jLabel1, gridBagConstraints);
 
+        txtArea.setEditable(false);
         txtArea.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         txtArea.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtArea.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtArea.setPreferredSize(new java.awt.Dimension(100, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         jPanel1.add(txtArea, gridBagConstraints);
         txtArea.getAccessibleContext().setAccessibleName("");
 
+        jLabel2.setBackground(new java.awt.Color(0, 51, 51));
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("CENTROIDE:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -283,15 +289,19 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         jPanel1.add(jLabel2, gridBagConstraints);
 
+        txtCentroide.setEditable(false);
         txtCentroide.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         txtCentroide.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCentroide.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtCentroide.setPreferredSize(new java.awt.Dimension(100, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         jPanel1.add(txtCentroide, gridBagConstraints);
 
+        jLabel3.setBackground(new java.awt.Color(0, 51, 51));
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("cm²");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -299,7 +309,9 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 20);
         jPanel1.add(jLabel3, gridBagConstraints);
 
+        jLabel4.setBackground(new java.awt.Color(0, 51, 51));
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("cm");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;

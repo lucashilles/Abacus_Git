@@ -8,7 +8,10 @@ package controllers;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import views.telaInicial;
 
 /**
@@ -32,10 +35,23 @@ public class telaInicialController {
         frame.pack();
         frame.setIconImage(Toolkit.getDefaultToolkit().getImage(frame.getClass().getResource("/icons/Icone.png")));
         frame.setLocationRelativeTo(parent);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter(){
+        
+        @Override
+        public void windowClosing(WindowEvent e){
+          if(JOptionPane.showConfirmDialog(frame, "Tem certeza que deseja sair?")== JOptionPane.OK_OPTION){
+              frame.dispose();
+              parent.setVisible(true);
+          }  
+        }
+        });
         frame.setVisible(true);
     }
     private void abrirSecao(ActionEvent e){
         secaoDrawController sdc = new secaoDrawController(frame);
+        frame.setVisible(false);
+        
     }
     
     
