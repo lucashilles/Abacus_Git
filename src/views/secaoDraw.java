@@ -29,14 +29,18 @@ public class secaoDraw extends javax.swing.JPanel {
         initComponents();
         jLVertices.setModel(new DefaultListModel());
         DefaultListCellRenderer render1 = (DefaultListCellRenderer) jLVertices.getCellRenderer();
-        render1.setHorizontalAlignment(JLabel.CENTER);
+        render1.setHorizontalAlignment(JLabel.LEFT);
         jLBars.setModel(new DefaultListModel());
         DefaultListCellRenderer render2 = (DefaultListCellRenderer) jLBars.getCellRenderer();
-        render1.setHorizontalAlignment(JLabel.CENTER);
+        render2.setHorizontalAlignment(JLabel.LEFT);
     }
 
     public JButton getBtnAddV() {
         return btnAddV;
+    }
+
+    public JButton getBtnEditBar() {
+        return btnEditBar;
     }
 
     public JPanel getJPLists() {
@@ -47,23 +51,37 @@ public class secaoDraw extends javax.swing.JPanel {
         return txtArea;
     }
 
+    public JButton getBtnAddBar() {
+        return btnAddBar;
+    }
+
+    public JButton getBtnRemoveBar() {
+        return btnRemoveBar;
+    }
+
     public JPanel getJPanelAreaDraw() {
         return JPanelDrawArea;
     }
-    public JScrollPane getScrollPaneDraw(){
-    return jScrollPaneDraw;
+
+    public JScrollPane getScrollPaneDraw() {
+        return jScrollPaneDraw;
     }
-    public JButton getBtnZoomMais(){
-    return btnZoomMais;
+
+    public JButton getBtnZoomMais() {
+        return btnZoomMais;
     }
-    public JButton getBtnZoomOut(){
-    return btnZoomOut;}
+
+    public JButton getBtnZoomOut() {
+        return btnZoomOut;
+    }
 
     public JTextField getTxtCentroide() {
         return txtCentroide;
     }
-    public JButton getBtnRemoveVertice(){
-    return btnRemoveVertice;}
+
+    public JButton getBtnRemoveVertice() {
+        return btnRemoveVertice;
+    }
 
     public JList getJLVertices() {
         return jLVertices;
@@ -99,9 +117,9 @@ public class secaoDraw extends javax.swing.JPanel {
         jPMenu = new javax.swing.JPanel();
         btnAddV = new javax.swing.JButton();
         btnRemoveVertice = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnAddBar = new javax.swing.JButton();
+        btnRemoveBar = new javax.swing.JButton();
+        btnEditBar = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         btnZoomMais = new javax.swing.JButton();
         btnZoomOut = new javax.swing.JButton();
@@ -182,32 +200,32 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPMenu.add(btnRemoveVertice, gridBagConstraints);
 
-        jButton3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jButton3.setText("Adicionar barra");
+        btnAddBar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnAddBar.setText("Adicionar barra");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPMenu.add(jButton3, gridBagConstraints);
+        jPMenu.add(btnAddBar, gridBagConstraints);
 
-        jButton4.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jButton4.setText("Remover barra");
+        btnRemoveBar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnRemoveBar.setText("Remover barra");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPMenu.add(jButton4, gridBagConstraints);
+        jPMenu.add(btnRemoveBar, gridBagConstraints);
 
-        jButton5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jButton5.setText("Editar barra");
+        btnEditBar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnEditBar.setText("Editar barra");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPMenu.add(jButton5, gridBagConstraints);
+        jPMenu.add(btnEditBar, gridBagConstraints);
 
         jButton6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jButton6.setText("Descartar barras");
@@ -342,14 +360,14 @@ public class secaoDraw extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPanelDrawArea;
+    private javax.swing.JButton btnAddBar;
     private javax.swing.JButton btnAddV;
+    private javax.swing.JButton btnEditBar;
+    private javax.swing.JButton btnRemoveBar;
     private javax.swing.JButton btnRemoveVertice;
     private javax.swing.JButton btnZoomMais;
     private javax.swing.JButton btnZoomOut;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton9;
     private javax.swing.JList jLBars;

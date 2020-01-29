@@ -6,6 +6,7 @@
 package views;
 
 import entites.Vertice;
+import entites.barra;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -25,7 +26,7 @@ public class areaDesenho extends javax.swing.JPanel {
     Vertice centro = null;
     Vertice centroide = null;
     List<Vertice> vertices = new ArrayList<>();
-
+    List<barra> bars = new ArrayList<>();
     private double zoom = 2;
 
     public areaDesenho() {
@@ -103,6 +104,12 @@ public class areaDesenho extends javax.swing.JPanel {
         revalidate();
         repaint();
     }
+    public void updateBarsList(List<barra> b){
+        bars = b;
+        repaint();
+        revalidate();
+        
+    }
 
     public Vertice getCentro() {
         return centro;
@@ -142,6 +149,12 @@ public class areaDesenho extends javax.swing.JPanel {
             g2.setColor(Color.green);
             drawPoint(g, centroide.getX(), centroide.getY());
         }
+        }
+        if(bars.size() > 0){
+            g2.setColor(Color.gray);
+            for( barra b : bars){
+                drawPoint(g, b.getX(), b.getY());
+            }
         }
         
         validate();

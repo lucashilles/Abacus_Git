@@ -5,7 +5,9 @@
  */
 package controllers;
 
+import entites.Barras;
 import entites.Vertice;
+import entites.barra;
 import entites.secaoTransversal;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -13,8 +15,6 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.awt.geom.AffineTransform;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -27,22 +27,25 @@ import views.secaoDraw;
  * @author Administrador
  */
 public class secaoDrawController {
-
+    
+    private Barras bars = new Barras();
     private areaDesenho draw;
     private secaoTransversal sec = new secaoTransversal();
     private secaoDraw secView;
     private JFrame frame, parent;
-
+    
     public secaoDrawController(JFrame parent) {
         this.parent = parent;
         secView = new secaoDraw();
         draw = new areaDesenho();
-
+        
         init();
-
+        
     }
-
+    
     private void init() {
+        secView.getBtnRemoveBar().addActionListener(e -> removeBar(e));
+        secView.getBtnAddBar().addActionListener(e -> addBars(e));
         secView.getBtnRemoveVertice().addActionListener(e -> removeVertice(e));
         secView.getBtnZoomOut().addActionListener(e -> ZoomOut(e));
         secView.getBtnZoomMais().addActionListener(e -> ZoomIN(e));
@@ -58,27 +61,26 @@ public class secaoDrawController {
         frame.setIconImage(parent.getIconImage());
         frame.setLocationRelativeTo(parent);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter(){
+        frame.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent evt){
-                if(JOptionPane.showConfirmDialog(frame, "Tem certeza que deseja sair ?")== JOptionPane.OK_OPTION){
+            public void windowClosing(WindowEvent evt) {
+                if (JOptionPane.showConfirmDialog(frame, "Tem certeza que deseja sair ?") == JOptionPane.OK_OPTION) {
                     frame.setVisible(false);
                     parent.setVisible(true);
-                
+                    
                 }
             }
         });
         
-        
         frame.setVisible(true);
-
+        
     }
 
     // metodo que chama um dialogo para se adicionar um vértice
     private void add(ActionEvent e) {
         verticesCoordenatesController vcc = new verticesCoordenatesController(frame);
         Vertice v = vcc.getVerticeLancado();
-
+        
         if (v != null) {
             sec.addVertice(v);
             if (sec.getCentroide() != null) {
@@ -86,7 +88,7 @@ public class secaoDrawController {
                 secView.getTxtCentroide().setText("[" + String.format("%.2f", sec.getCentroide().getX()) + ";" + String.format("%.2f", sec.getCentroide().getY()) + "]");
             }
             if (sec.getArea() >= 0) {
-
+                
                 secView.getTxtArea().setText(String.format("%.2f", sec.getArea()));
             }
             draw.updateVerticeList(sec.getVertices());
@@ -94,12 +96,12 @@ public class secaoDrawController {
                 secView.getScrollPaneDraw().getViewport().setViewPosition(new Point((int) (draw.getSize().getWidth() / 4), (int) (draw.getSize().getHeight() / 4)));
             }
             DefaultListModel model1 = (DefaultListModel) secView.getJLVertices().getModel();
-            model1.addElement("V(x,y): " + v.getX() + "," + v.getY());
+            model1.addElement("V[x;y]: [" + v.getX() + ";" + v.getY()+"]");
             CardLayout cl = (CardLayout) secView.getJPLists().getLayout();
             cl.show(secView.getJPLists(), "listas");
         }
     }
-
+    
     private void ZoomIN(ActionEvent e) {
         if (draw.getZoom() < 3.5) {
             draw.Zoom(1);
@@ -113,19 +115,19 @@ public class secaoDrawController {
             JOptionPane.showMessageDialog(frame, "Zoom máximo: " + (String.format("%.2f", (draw.getZoom() - 2) * 100)) + "%", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-
+    
     private void ZoomOut(ActionEvent e) {
         if (draw.getZoom() > 1.1) {
             draw.Zoom(-1);
-
+            
             secView.getScrollPaneDraw().getViewport().setViewSize(draw.getSize());
             secView.getScrollPaneDraw().getViewport().setViewPosition(new Point((int) draw.getSize().getWidth() / 4, (int) draw.getSize().getHeight() / 4));
-
+            
         } else {
             JOptionPane.showMessageDialog(frame, "Zoom minimo", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-
+    
     private void removeVertice(ActionEvent e) {
         if (secView.getJLVertices().isSelectionEmpty() == false) {
             int indiceX;
@@ -144,7 +146,7 @@ public class secaoDrawController {
                 } else {
                     secView.getTxtArea().setText("0.0");
                 }
-
+                
             }
             if (sec.getCentroide() != null) {
                 if (sec.getVertices().size() > 2) {
@@ -152,15 +154,45 @@ public class secaoDrawController {
                     secView.getTxtCentroide().setText("[" + String.format("%.2f", sec.getCentroide().getX()) + ";" + String.format("%.2f", sec.getCentroide().getY()) + "]");
                 } else {
                     secView.getTxtCentroide().setText("[0;0]");
-
+                    
                 }
             }
-
+            
         } else {
             JOptionPane.showMessageDialog(frame, "Selecione um vértice", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
-
+        
     }
+// parei aqui 28/01 P.S: adiconar no desenho as barras lançadas
 
-
+    private void addBars(ActionEvent e) {
+        if (sec.getVertices().isEmpty() == true) {
+            JOptionPane.showMessageDialog(frame, "Antes de lançar uma barra, lance primeiramente \n os vértices da seção!", "Importante", JOptionPane.INFORMATION_MESSAGE);
+            
+        } else {
+            barADDController bac = new barADDController(frame);
+            barra b = bac.getBarra();
+            if (b != null) {
+                bars.addBarra(b);
+                draw.updateBarsList(bars.getBarras());
+                DefaultListModel md = (DefaultListModel) secView.getJLBars().getModel();
+                md.addElement("B[x;y]: [" + b.getX() + ";" + b.getY() + "]  Ø: " + b.getDiametro());
+                CardLayout cl = (CardLayout) secView.getJPLists().getLayout();
+                cl.show(secView.getJPLists(), "listas");
+            }
+        }
+    }
+    private void removeBar(ActionEvent e){
+        if(secView.getJLBars().isSelectionEmpty() == false){
+            int indice;
+            indice = secView.getJLBars().getSelectedIndex();
+            bars.removeBarra(indice);
+            draw.updateBarsList(bars.getBarras());
+            DefaultListModel md = (DefaultListModel) secView.getJLBars().getModel();
+            md.remove(indice);
+        }else{
+          JOptionPane.showMessageDialog(frame, "Selecione uma barra da lista", "Aviso", JOptionPane.WARNING_MESSAGE);  
+        }
+    }
+    
 }
