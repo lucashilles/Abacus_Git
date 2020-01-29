@@ -62,6 +62,7 @@ public class barra {
      */
     public void setDiametro(float diametro) {
         this.diametro = diametro;
+        areaBar();
     }
 
     /**

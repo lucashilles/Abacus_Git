@@ -51,6 +51,7 @@ public class Barras {
             barras.get(indice).setX(x);
             barras.get(indice).setY(y);
             barras.get(indice).setDiametro(diametro);
+            
         }
         gerarAreaTotal();
     }
