@@ -37,6 +37,7 @@ public class secaoDrawController {
     private secaoDraw secView;
     private JDialog frame; //Alterado para JDialog para fazer o controle por modais
     private JFrame parent;
+    private secaoTransversal secEnviar;
 
     public secaoDrawController(JFrame parent) {
         this.parent = parent;
@@ -45,17 +46,21 @@ public class secaoDrawController {
         init();
     }
 
-    
     /**
      * Retorna a seção armazenada neste objeto
-     * 
+     *
      * @return secaoTranversal gerada nesta tela
      */
     public secaoTransversal getSec() {
         return sec;
     }
-    public Barras getBars(){
+
+    public Barras getBars() {
         return bars;
+    }
+
+    public JDialog getFrame() {
+        return frame;
     }
 
     private void init() {
@@ -71,6 +76,7 @@ public class secaoDrawController {
         secView.getBtnAddV().addActionListener(e -> add(e));
         secView.getTxtArea().setEnabled(false);
         secView.getTxtCentroide().setEnabled(false);
+
         frame = new JDialog(parent, "Desenho da seção transversal");
         secView.getJPanelAreaDraw().setLayout(new BorderLayout());
         secView.getJPanelAreaDraw().add(draw, BorderLayout.CENTER);
@@ -79,10 +85,10 @@ public class secaoDrawController {
         frame.pack();
         frame.setIconImage(parent.getIconImage());
         frame.setLocationRelativeTo(parent);
-        
+
         //Torna esta janela um modal, bloqueando a linha de execução da tela inicial
         frame.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-        
+
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -93,7 +99,7 @@ public class secaoDrawController {
                 }
             }
         });
-        
+
         parent.setVisible(false);
         frame.setVisible(true);
 
@@ -263,9 +269,22 @@ public class secaoDrawController {
             cl.show(secView.getJPLists(), "entrada");
         }
     }
-    private void createSection(){
+
+    private void createSection() {
+        if(sec.getVertices().size() > 2 && bars.getBarras().size() >2 ){
+        secEnviar = new secaoTransversal(getSec(), getBars());
         frame.setVisible(false);
         parent.setVisible(true);
+    }else{
+            JOptionPane.showMessageDialog(frame, "Seção inválida! Verifique a quantidade de vértices e barras","Erro" ,JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * @return the secEnviar
+     */
+    public secaoTransversal getSecEnviar() {
+        return secEnviar;
     }
 
 }

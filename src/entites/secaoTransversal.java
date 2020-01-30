@@ -19,9 +19,18 @@ public class secaoTransversal {
     private Vertice centroide = null;
     private tipoConcreto typeConcrete;
     private int numBars;
+    private Barras bars;
 
     public secaoTransversal() {
 
+    }
+    public secaoTransversal(secaoTransversal sec, Barras bars){
+        this.vertices = sec.getVertices();
+        this.numBars = bars.getBarras().size();
+        this.bars = bars;
+        gerarArea();
+        gerarCentroide();
+       
     }
 
     public void addVertice(Vertice v) {
@@ -157,6 +166,13 @@ public class secaoTransversal {
      */
     public void setNumBars(int numBars) {
         this.numBars = numBars;
+    }
+
+    /**
+     * @return the bars
+     */
+    public Barras getBars() {
+        return bars;
     }
 
 }

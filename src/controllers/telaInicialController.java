@@ -34,7 +34,13 @@ public class telaInicialController {
     }
 
     private void init() {
+        tela.getBtnEsforcos().addActionListener(e ->lancarEsforcos());
         tela.getBtnSecao().addActionListener(e -> abrirSecao(e));
+        tela.getBtnEsforcos().setEnabled(false);
+        tela.getBtnProp().setEnabled(false);
+        tela.getBtnConfig().setEnabled(false);
+        tela.getBtnAbaco().setEnabled(false);
+        tela.getBtnResults().setEnabled(false);
         frame = new JFrame(parent.getTitle());
         frame.add(tela);
         frame.pack();
@@ -51,18 +57,32 @@ public class telaInicialController {
                 }
             }
         });
-        getFrame().setVisible(true);
+        frame.setVisible(true);
     }
 
     private void abrirSecao(ActionEvent e) {
+
         secaoDrawController sdc = new secaoDrawController(frame);
 //      Devido a alteração da sdc para modal, a execução desta função só
 //      irá continuar após ao fechamento do sdc, o que possibilita obter a
 //      seção gerada lá.
-        secaoTransversal = sdc.getSec();
-        barras = sdc.getBars();
-        System.out.println("Qtd de vertices: " + secaoTransversal.getNumVertice());
-        System.out.println("QTS de barras: "+ barras.getBarras().size());
+
+        if (sdc.getSec().getVertices().isEmpty() == true || sdc.getBars().getBarras().isEmpty() == true) {
+            tela.getBtnEsforcos().setEnabled(false);
+            
+        } else {
+            tela.getBtnEsforcos().setEnabled(true);
+            secaoTransversal = sdc.getSecEnviar();
+            //barras = sdc.getBars();
+            // Apenas para verificar se esta tudo certo! apos o termino do programa, será removido
+            System.out.println("Qtd de vertices: " + secaoTransversal.getNumVertice());
+            System.out.println("QTS de barras: " + secaoTransversal.getNumBars());
+            System.out.println("centroide: "+ secaoTransversal.getCentroide().getX()+", "+ secaoTransversal.getCentroide().getY());
+            System.out.println("AREA: "+ secaoTransversal.getArea());
+            System.out.println("BArs AREA: "+ secaoTransversal.getBars().getAreaBars());
+            tela.getBtnSecao().setEnabled(false);
+        }
+        
     }
 
     /**
@@ -70,6 +90,9 @@ public class telaInicialController {
      */
     public JFrame getFrame() {
         return frame;
+    }
+    private void lancarEsforcos(){
+        LancaEsforcosController lec = new LancaEsforcosController(frame);
     }
 
 }

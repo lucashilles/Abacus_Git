@@ -10,11 +10,21 @@ package entites;
  * @author Administrador
  */
 public enum tipoConcreto {
-    C20,
-    C25,
-    C30,
-    C35,
-    C40,
-    C50;
-    
+
+    C20(20),
+    C25(25),
+    C30(30),
+    C35(35),
+    C40(40),
+    C50(50);
+    private float tipoConcreto;
+
+    tipoConcreto(float tipoConcreto) {
+        this.tipoConcreto = tipoConcreto;
+    }
+
+    public float getTipoConcreto() {
+        return this.tipoConcreto;
+    }
+
 }

@@ -12,7 +12,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 import jdk.nashorn.internal.objects.Global;
@@ -63,8 +62,8 @@ public class areaDesenho extends javax.swing.JPanel {
 
         Vertice fim = vertices.get(vertices.size() - 1);
         Vertice inicio = vertices.get(0);
-
-        g.drawLine((int) Math.round((int)getZoom()*fim.getX()),  (int)getZoom()*Math.round(fim.getY() * (-1)),(int)getZoom()*Math.round(inicio.getX()),(int)getZoom()* Math.round(inicio.getY()) * (-1));
+        
+        g.drawLine((int) Math.round(getZoom()*fim.getX()),  (int)getZoom()*Math.round(fim.getY() * (-1)),(int)getZoom()*Math.round(inicio.getX()),(int)getZoom()* Math.round(inicio.getY()) * (-1));
     }
 
     private void drawPoint(Graphics g, float x, float y) {
