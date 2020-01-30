@@ -22,10 +22,10 @@ public class barADDController {
 
     barra bar = null;
     barADD view;
-    JFrame frame;
+    JDialog frame;
     JDialog dialog;
 
-    public barADDController(JFrame parent) {
+    public barADDController(JDialog parent) {
         this.frame = parent;
         view = new barADD();
         init();

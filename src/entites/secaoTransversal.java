@@ -13,8 +13,7 @@ import java.util.ArrayList;
  * @author Administrador
  */
 public class secaoTransversal {
-
-    private int numVertice;
+    private int numVertice; //Variável desnecessária, este dado pode ser obtido pela lista de vertices
     private List<Vertice> vertices = new ArrayList<>();
     private float area = 0f;
     private Vertice centroide = null;
@@ -100,15 +99,16 @@ public class secaoTransversal {
      * @return the numVertice
      */
     public int getNumVertice() {
-        return numVertice;
+        return vertices.size();
     }
 
     /**
      * @param numVertice the numVertice to set
      */
-    public void setNumVertice(int numVertice) {
-        this.numVertice = numVertice;
-    }
+//    Desnecessário, a lista de vértices já faz este controle.
+//    public void setNumVertice(int numVertice) {
+//        this.numVertice = numVertice;
+//    }
 
     /**
      * @return the vertices

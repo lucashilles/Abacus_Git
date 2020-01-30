@@ -5,10 +5,7 @@
  */
 package views;
 
-import java.awt.Dimension;
 import java.awt.Toolkit;
-import javafx.scene.paint.Color;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
