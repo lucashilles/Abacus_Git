@@ -6,12 +6,11 @@
 package controllers;
 
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import javafx.scene.paint.Color;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import views.mainFrame;
 
 /**
@@ -29,7 +28,18 @@ public class mainFrameController {
     private void init(){
         mf.getBntNew().addActionListener(e -> Start(e));
         mf.setTitle("ABACUS");
-        mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        //Alterado pois a aplicação não estava finalização ao fechar as janelas
+        mf.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        mf.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if (JOptionPane.showConfirmDialog(mf, "Tem certeza que deseja sair?") == JOptionPane.OK_OPTION) {
+                    mf.dispose();
+                    System.exit(0);
+                }
+            }
+        });
         mf.pack();
         mf.setVisible(true);
     

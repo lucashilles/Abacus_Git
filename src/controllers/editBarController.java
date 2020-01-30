@@ -17,12 +17,12 @@ import views.editBar;
  * @author Administrador
  */
 public class editBarController {
-    JFrame parent;
+    JDialog parent;
     JDialog dialog;
     editBar view;
     private barra barraE = null;
     
-    public editBarController(JFrame parent, barra bar){
+    public editBarController(JDialog parent, barra bar){
         this.parent = parent;
         this.barraE = bar;
         view = new editBar();

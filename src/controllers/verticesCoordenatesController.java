@@ -24,10 +24,10 @@ public class verticesCoordenatesController {
 
     Vertice v = null;
     JDialog dialog;
-    JFrame parent;
+    JDialog parent;
     verticesCoordenates view;
 
-    public verticesCoordenatesController(JFrame parent) {
+    public verticesCoordenatesController(JDialog parent) {
         this.parent = parent;
         view = new verticesCoordenates();
         init();
