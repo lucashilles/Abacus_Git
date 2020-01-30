@@ -35,6 +35,18 @@ public class secaoDraw extends javax.swing.JPanel {
         render2.setHorizontalAlignment(JLabel.LEFT);
     }
 
+    public JButton getBtnDiscardBar() {
+        return btnDiscardBar;
+    }
+
+    public JButton getBtnRemake() {
+        return btnRemake;
+    }
+
+    public JButton getBtnCriarSecao() {
+        return btnCriarSec;
+    }
+
     public JButton getBtnAddV() {
         return btnAddV;
     }
@@ -120,11 +132,11 @@ public class secaoDraw extends javax.swing.JPanel {
         btnAddBar = new javax.swing.JButton();
         btnRemoveBar = new javax.swing.JButton();
         btnEditBar = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnDiscardBar = new javax.swing.JButton();
         btnZoomMais = new javax.swing.JButton();
         btnZoomOut = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        btnRemake = new javax.swing.JButton();
+        btnCriarSec = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtArea = new javax.swing.JTextField();
@@ -227,14 +239,14 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPMenu.add(btnEditBar, gridBagConstraints);
 
-        jButton6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jButton6.setText("Descartar barras");
+        btnDiscardBar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnDiscardBar.setText("Descartar barras");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPMenu.add(jButton6, gridBagConstraints);
+        jPMenu.add(btnDiscardBar, gridBagConstraints);
 
         btnZoomMais.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         btnZoomMais.setText("Mais Zoom");
@@ -254,23 +266,23 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPMenu.add(btnZoomOut, gridBagConstraints);
 
-        jButton9.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jButton9.setText("Refazer tudo");
+        btnRemake.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnRemake.setText("Refazer tudo");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPMenu.add(jButton9, gridBagConstraints);
+        jPMenu.add(btnRemake, gridBagConstraints);
 
-        jButton10.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jButton10.setText("Criar seção");
+        btnCriarSec.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnCriarSec.setText("Criar seção");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPMenu.add(jButton10, gridBagConstraints);
+        jPMenu.add(btnCriarSec, gridBagConstraints);
 
         jPanel2.add(jPMenu, java.awt.BorderLayout.PAGE_START);
 
@@ -362,14 +374,14 @@ public class secaoDraw extends javax.swing.JPanel {
     private javax.swing.JPanel JPanelDrawArea;
     private javax.swing.JButton btnAddBar;
     private javax.swing.JButton btnAddV;
+    private javax.swing.JButton btnCriarSec;
+    private javax.swing.JButton btnDiscardBar;
     private javax.swing.JButton btnEditBar;
+    private javax.swing.JButton btnRemake;
     private javax.swing.JButton btnRemoveBar;
     private javax.swing.JButton btnRemoveVertice;
     private javax.swing.JButton btnZoomMais;
     private javax.swing.JButton btnZoomOut;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton9;
     private javax.swing.JList jLBars;
     private javax.swing.JList jLVertices;
     private javax.swing.JLabel jLabel1;

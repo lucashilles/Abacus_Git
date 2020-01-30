@@ -20,7 +20,7 @@ import views.mainFrame;
  */
 public class mainFrameController {
     private mainFrame mf;
-
+    
     public mainFrameController() {
         mf = new mainFrame();
         mf.setPreferredSize(new Dimension(400,300));
@@ -35,7 +35,9 @@ public class mainFrameController {
     
     }
     private void Start(ActionEvent e){
-     new telaInicialController(mf);
+       
+     telaInicialController tic = new telaInicialController(mf);;
+     
      mf.setVisible(false);
     
     }

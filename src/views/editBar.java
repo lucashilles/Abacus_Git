@@ -25,7 +25,7 @@ public class editBar extends javax.swing.JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(200, 180);
+        return new Dimension(200, 150);
     }
 
     public JTextField getTxtCx() {
@@ -61,9 +61,11 @@ public class editBar extends javax.swing.JPanel {
         txtCy = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(0, 51, 51));
         setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Ø (mm): ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
@@ -71,8 +73,10 @@ public class editBar extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         add(jLabel1, gridBagConstraints);
 
+        jComboBox1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "5.0", "6.3", "8.0", "10.0", "12.5", "16.0", "20.0", "22.5", "25.0" }));
         jComboBox1.setToolTipText("");
+        jComboBox1.setNextFocusableComponent(txtCx);
         jComboBox1.setPreferredSize(new java.awt.Dimension(68, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
@@ -80,6 +84,7 @@ public class editBar extends javax.swing.JPanel {
         add(jComboBox1, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Coordenada X (cm):");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -88,6 +93,7 @@ public class editBar extends javax.swing.JPanel {
         add(jLabel2, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Coordenada Y (cm):");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -95,6 +101,9 @@ public class editBar extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         add(jLabel3, gridBagConstraints);
 
+        txtCx.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtCx.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCx.setNextFocusableComponent(txtCy);
         txtCx.setPreferredSize(new java.awt.Dimension(70, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -102,6 +111,9 @@ public class editBar extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         add(txtCx, gridBagConstraints);
 
+        txtCy.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtCy.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCy.setNextFocusableComponent(jButton1);
         txtCy.setPreferredSize(new java.awt.Dimension(70, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;

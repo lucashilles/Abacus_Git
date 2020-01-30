@@ -40,18 +40,26 @@ public class telaInicialController {
         
         @Override
         public void windowClosing(WindowEvent e){
-          if(JOptionPane.showConfirmDialog(frame, "Tem certeza que deseja sair?")== JOptionPane.OK_OPTION){
-              frame.dispose();
+          if(JOptionPane.showConfirmDialog(getFrame(), "Tem certeza que deseja sair?")== JOptionPane.OK_OPTION){
+                    frame.dispose();
               parent.setVisible(true);
           }  
         }
         });
-        frame.setVisible(true);
+        getFrame().setVisible(true);
     }
     private void abrirSecao(ActionEvent e){
         secaoDrawController sdc = new secaoDrawController(frame);
-        frame.setVisible(false);
         
+       frame.setVisible(false);
+        
+    }
+
+    /**
+     * @return the frame
+     */
+    public JFrame getFrame() {
+        return frame;
     }
     
     
