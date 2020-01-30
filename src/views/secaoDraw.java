@@ -39,6 +39,10 @@ public class secaoDraw extends javax.swing.JPanel {
         return btnDiscardBar;
     }
 
+    public JButton getBtnCreateSec() {
+        return btnCriarSec;
+    }
+
     public JButton getBtnRemake() {
         return btnRemake;
     }

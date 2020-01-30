@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import entites.Barras;
 import entites.secaoTransversal;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -23,6 +24,7 @@ public class telaInicialController {
     private JFrame parent, frame;
     private telaInicial tela;
     private secaoTransversal secaoTransversal;
+    private Barras barras;
 
     public telaInicialController(JFrame parent) {
         this.parent = parent;
@@ -58,7 +60,9 @@ public class telaInicialController {
 //      irá continuar após ao fechamento do sdc, o que possibilita obter a
 //      seção gerada lá.
         secaoTransversal = sdc.getSec();
+        barras = sdc.getBars();
         System.out.println("Qtd de vertices: " + secaoTransversal.getNumVertice());
+        System.out.println("QTS de barras: "+ barras.getBarras().size());
     }
 
     /**

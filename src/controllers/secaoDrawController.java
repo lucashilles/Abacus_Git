@@ -54,8 +54,12 @@ public class secaoDrawController {
     public secaoTransversal getSec() {
         return sec;
     }
+    public Barras getBars(){
+        return bars;
+    }
 
     private void init() {
+        secView.getBtnCreateSec().addActionListener(e -> createSection());
         secView.getBtnRemake().addActionListener(e -> remake());
         secView.getBtnDiscardBar().addActionListener(e -> discardBars(e));
         secView.getBtnEditBar().addActionListener(e -> editBar(e));
@@ -258,6 +262,10 @@ public class secaoDrawController {
             CardLayout cl = (CardLayout) secView.getJPLists().getLayout();
             cl.show(secView.getJPLists(), "entrada");
         }
+    }
+    private void createSection(){
+        frame.setVisible(false);
+        parent.setVisible(true);
     }
 
 }
