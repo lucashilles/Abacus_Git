@@ -89,11 +89,12 @@ public class secaoDrawController {
         //Torna esta janela um modal, bloqueando a linha de execução da tela inicial
         frame.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent evt) {
                 if (JOptionPane.showConfirmDialog(frame, "Tem certeza que deseja sair ?") == JOptionPane.OK_OPTION) {
+                    
                     frame.setVisible(false);
                     parent.setVisible(true);
                 }
@@ -271,12 +272,16 @@ public class secaoDrawController {
     }
 
     private void createSection() {
-        if(sec.getVertices().size() > 2 && bars.getBarras().size() >2 ){
-        secEnviar = new secaoTransversal(getSec(), getBars());
-        frame.setVisible(false);
-        parent.setVisible(true);
-    }else{
-            JOptionPane.showMessageDialog(frame, "Seção inválida! Verifique a quantidade de vértices e barras","Erro" ,JOptionPane.ERROR_MESSAGE);
+        if (sec.getVertices().size() > 2 && bars.getBarras().size() > 2) {
+            if (JOptionPane.showConfirmDialog(frame, "Deseja criar a seção?") == JOptionPane.OK_OPTION) {
+                secEnviar = new secaoTransversal(getSec(), getBars());
+                JOptionPane.showMessageDialog(frame, "Seção criada!");
+                frame.setVisible(false);
+                parent.setVisible(true);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(frame, "Seção inválida! Verifique a quantidade de vértices e barras", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

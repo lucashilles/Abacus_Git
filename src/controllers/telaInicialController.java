@@ -67,7 +67,7 @@ public class telaInicialController {
 //      irá continuar após ao fechamento do sdc, o que possibilita obter a
 //      seção gerada lá.
 
-        if (sdc.getSec().getVertices().isEmpty() == true || sdc.getBars().getBarras().isEmpty() == true) {
+        if (sdc.getSecEnviar() == null) {
             tela.getBtnEsforcos().setEnabled(false);
             
         } else {

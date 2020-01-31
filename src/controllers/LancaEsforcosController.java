@@ -52,6 +52,6 @@ public class LancaEsforcosController {
         frame.setVisible(true);
     }
  private void lancar(){
-     JOptionPane.showConfirmDialog(frame, view.getJPanelE(),"Confirme o lançamento",JOptionPane.QUESTION_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+     JOptionPane.showConfirmDialog(frame, view.getJPanelE());
  }
 }
