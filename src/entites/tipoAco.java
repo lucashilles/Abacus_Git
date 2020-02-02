@@ -10,18 +10,25 @@ package entites;
  * @author Administrador
  */
 public enum tipoAco {
-    CA_60(600){
-        @Override
-        public String toString(){
-            return "CA-60";
-        }
-    },// MPa
-    CA_50(500){
-            @Override
-            public String toString(){
-            return "CA-50";
-        }
-    }; // MPa
+
+    NULL(0) {
+                @Override
+                public String toString() {
+                    return "-------";
+                }
+            },
+    CA_60(600) {
+                @Override
+                public String toString() {
+                    return "CA-60";
+                }
+            },// MPa
+    CA_50(500) {
+                @Override
+                public String toString() {
+                    return "CA-50";
+                }
+            }; // MPa
     private final float tipoAco;
 
     /**
@@ -30,9 +37,9 @@ public enum tipoAco {
     public float getTipoAco() {
         return tipoAco;
     }
-    tipoAco(float tipoAco){
+
+    tipoAco(float tipoAco) {
         this.tipoAco = tipoAco;
     }
-    
-    
+
 }

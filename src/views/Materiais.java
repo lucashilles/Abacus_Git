@@ -79,6 +79,7 @@ public class Materiais extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jComboBox1 = new javax.swing.JComboBox();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtFck = new javax.swing.JTextField();
@@ -100,6 +101,8 @@ public class Materiais extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         btnEAco = new javax.swing.JButton();
         btnConfirmar = new javax.swing.JButton();
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setBackground(new java.awt.Color(0, 51, 51));
         setPreferredSize(new java.awt.Dimension(230, 300));
@@ -284,6 +287,7 @@ public class Materiais extends javax.swing.JPanel {
     private javax.swing.JButton btnEAco;
     private javax.swing.JButton btnEcs;
     private javax.swing.JButton btnFck;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -22,9 +22,10 @@ import views.Materiais;
  * @author Administrador
  */
 public class MateriaisController {
-    private Materials materiais;
-    private Concreto concreto;
-    private Aco aco;
+
+    private Materials materiais = null;
+    private Concreto concreto = null;
+    private Aco aco = null;
     private tipoAco acoType;
     private JDialog frame;
     private JFrame parent;
@@ -35,69 +36,92 @@ public class MateriaisController {
         view = new Materiais();
         init();
     }
-    private void init(){   
-        view.getBtnConfirmar().addActionListener(e ->finalizar());
+
+    private void init() {
+        view.getBtnConfirmar().addActionListener(e -> finalizar());
         view.getBntEAco().addActionListener(e -> setAco());
         view.getJComboBoxAco().addItemListener(e -> setFyk(e));
         view.getBtnEcs().addActionListener(e -> setECs());
-        view.getJCkeckEcs().addActionListener(e ->editECS(e));
+        view.getJCkeckEcs().addActionListener(e -> editECS(e));
         view.getBtnFck().addActionListener(e -> setFck());
+        view.getTxtFyk().setEditable(false);
         view.getBtnConfirmar().setEnabled(false);
         view.getTxtEcs().setEditable(false);
         view.getBtnEcs().setEnabled(false);
-        frame = new JDialog(parent,"Materiais");
+        frame = new JDialog(parent, "Materiais");
         frame.add(view);
         frame.pack();
         frame.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         frame.setLocationRelativeTo(parent);
+        frame.setResizable(false);
         frame.setVisible(true);
-        
+
     }
-    private void setFck(){
-        if(view.getTxtFck().getText() != null){
+
+    private void setFck() {
+        if (view.getTxtFck().getText().isEmpty() == false) {
             float fck = Float.parseFloat(view.getTxtFck().getText());
             concreto = new Concreto(fck);
             view.getTxtEcs().setText(String.format("%.2f", concreto.getModuloElasticidade()));
 
         }
     }
-    private void editECS(ActionEvent e){
-      if(view.getJCkeckEcs().isSelected() == true){
-          view.getTxtEcs().setEditable(true);
-          view.getBtnEcs().setEnabled(true);
-      }else{
-          view.getTxtEcs().setEditable(false);
-          view.getBtnEcs().setEnabled(false);
-      }
+
+    private void editECS(ActionEvent e) {
+        if (view.getJCkeckEcs().isSelected() == true) {
+            view.getTxtEcs().setEditable(true);
+            view.getBtnEcs().setEnabled(true);
+            view.getTxtEcs().setText("");
+        } else {
+            view.getTxtEcs().setEditable(false);
+            view.getBtnEcs().setEnabled(false);
+        }
     }
-    private void setECs(){
-        if(view.getJCkeckEcs().isSelected() == true){
+
+    private void setECs() {
+        if (view.getJCkeckEcs().isSelected() == true) {
+            if(view.getTxtEcs().getText().isEmpty() == false){
             concreto.setModuloElasticidade(Float.parseFloat(view.getTxtEcs().getText()));
-            System.out.println("ECS novo: "+ concreto.getModuloElasticidade());
+            System.out.println("ECS novo: " + concreto.getModuloElasticidade());
+            }else{
+                System.out.println("Dado Inválido");
+                System.out.println("Ecs não mudado: "+ concreto.getModuloElasticidade());
+            }
             
         }
     }
-   
-    public void setFyk(ItemEvent e){
-        if(e.getStateChange() == ItemEvent.SELECTED){
+
+    public void setFyk(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
             acoType = (tipoAco) e.getItem();
-            view.getTxtFyk().setText(String.format("%.2f", acoType.getTipoAco()));
+            if (acoType.getTipoAco() != 0) {
+                view.getTxtFyk().setText(String.format("%.2f", acoType.getTipoAco()));
+            } else {
+
+                view.getTxtFyk().setText("");
+            }
         }
     }
-    public void setAco(){
-        if(view.getTxtEAco().getText().isEmpty() == false && view.getTxtFyk().getText().isEmpty()==false){
-            aco = new Aco(acoType, Float.parseFloat(view.getTxtEAco().getText()));
-            //vai ser removido depois - apenas por questao de verificação de funcionamento
-            System.out.println("Aço: "+ acoType.toString()+" fyk: "+ acoType.getTipoAco());
-            System.out.println("E aco: "+ aco.getEcs()+"Fyk a: "+ aco.getFyk()+" tipo: "+ aco.getTypeAco());
-            view.getBtnConfirmar().setEnabled(true);
+
+    public void setAco() {
+        if (view.getTxtEAco().getText().isEmpty() == false && view.getTxtFyk().getText().isEmpty() == false) {
+            if (acoType.getTipoAco() > 0) {
+                aco = new Aco(acoType, Float.parseFloat(view.getTxtEAco().getText()));
+                //vai ser removido depois - apenas por questao de verificação de funcionamento
+                System.out.println("Aço: " + acoType.toString() + " fyk: " + acoType.getTipoAco());
+                System.out.println("E aco: " + aco.getEcs() + "Fyk a: " + aco.getFyk() + " tipo: " + aco.getTypeAco());
+                if (aco != null && concreto != null) {
+                    view.getBtnConfirmar().setEnabled(true);
+                }
+            }
         }
     }
-    private void finalizar(){
-        if(aco != null && concreto != null){
+
+    private void finalizar() {
+        if (aco != null && concreto != null) {
             materiais = new Materials(concreto, aco);
             //verificação apenas
-            System.out.println("Concreto Mpa: "+ materiais.getConcrete().getFck()+ "Aco fyk: "+ materiais.getAco().getFyk()+ "tipoAco: "+ materiais.getAco().getTypeAco());
+            System.out.println("Concreto Mpa: " + materiais.getConcrete().getFck() + "Aco fyk: " + materiais.getAco().getFyk() + "tipoAco: " + materiais.getAco().getTypeAco());
             frame.setVisible(false);
             parent.setVisible(true);
         }
