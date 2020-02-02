@@ -8,6 +8,7 @@ package views;
 import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -26,11 +27,34 @@ public class LancaEsforcos extends javax.swing.JPanel {
     public Dimension getPreferredSize() {
         return new Dimension(240, 220);
     }
-    public JButton getBtnLancar(){
-    return btnLancar;
+
+    public JButton getBtnLancar() {
+        return btnLancar;
     }
-    public JPanel getJPanelE(){
-    return JPanelE;}
+
+    public JPanel getJPanelE() {
+        return JPanelE;
+    }
+
+    public JTextField getTxtMx() {
+        return txtMx;
+    }
+
+    public JTextField getTxtMy() {
+        return txtMy;
+    }
+
+    public JTextField getTxtNk() {
+        return txtNK;
+    }
+
+    public JTextField getTxtEx() {
+        return txtEx;
+    }
+
+    public JTextField getTxtEy() {
+        return txtEy;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,20 +68,20 @@ public class LancaEsforcos extends javax.swing.JPanel {
 
         JPanelE = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtEx = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtEy = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtMx = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtMy = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtNK = new javax.swing.JTextField();
         btnLancar = new javax.swing.JButton();
 
         JPanelE.setBackground(new java.awt.Color(255, 255, 255));
@@ -68,8 +92,10 @@ public class LancaEsforcos extends javax.swing.JPanel {
         jLabel4.setText("eX:");
         JPanelE.add(jLabel4);
 
-        jTextField4.setPreferredSize(new java.awt.Dimension(30, 20));
-        JPanelE.add(jTextField4);
+        txtEx.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtEx.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtEx.setPreferredSize(new java.awt.Dimension(50, 20));
+        JPanelE.add(txtEx);
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel6.setText("cm");
@@ -79,8 +105,10 @@ public class LancaEsforcos extends javax.swing.JPanel {
         jLabel5.setText("eY:");
         JPanelE.add(jLabel5);
 
-        jTextField5.setPreferredSize(new java.awt.Dimension(30, 20));
-        JPanelE.add(jTextField5);
+        txtEy.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtEy.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtEy.setPreferredSize(new java.awt.Dimension(50, 20));
+        JPanelE.add(txtEy);
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel7.setText("cm");
@@ -111,10 +139,12 @@ public class LancaEsforcos extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
         jPanel3.add(jLabel1, gridBagConstraints);
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(80, 20));
+        txtMx.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtMx.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtMx.setPreferredSize(new java.awt.Dimension(80, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanel3.add(jTextField1, gridBagConstraints);
+        jPanel3.add(txtMx, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -126,12 +156,14 @@ public class LancaEsforcos extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
         jPanel3.add(jLabel2, gridBagConstraints);
 
-        jTextField2.setPreferredSize(new java.awt.Dimension(80, 20));
+        txtMy.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtMy.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtMy.setPreferredSize(new java.awt.Dimension(80, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanel3.add(jTextField2, gridBagConstraints);
+        jPanel3.add(txtMy, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -143,12 +175,14 @@ public class LancaEsforcos extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
         jPanel3.add(jLabel3, gridBagConstraints);
 
-        jTextField3.setPreferredSize(new java.awt.Dimension(80, 20));
+        txtNK.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtNK.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtNK.setPreferredSize(new java.awt.Dimension(80, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanel3.add(jTextField3, gridBagConstraints);
+        jPanel3.add(txtNK, gridBagConstraints);
 
         btnLancar.setBackground(new java.awt.Color(153, 255, 153));
         btnLancar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
@@ -178,10 +212,10 @@ public class LancaEsforcos extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField txtEx;
+    private javax.swing.JTextField txtEy;
+    private javax.swing.JTextField txtMx;
+    private javax.swing.JTextField txtMy;
+    private javax.swing.JTextField txtNK;
     // End of variables declaration//GEN-END:variables
 }

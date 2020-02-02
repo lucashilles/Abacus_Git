@@ -6,6 +6,8 @@
 package controllers;
 
 import entites.Barras;
+import entites.Esforcos;
+import entites.Materials;
 import entites.secaoTransversal;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -21,10 +23,12 @@ import views.telaInicial;
  */
 public class telaInicialController {
 
+    private Materials materiais;
     private JFrame parent, frame;
     private telaInicial tela;
     private secaoTransversal secaoTransversal;
-    private Barras barras;
+    private Esforcos esforcos;
+    // private Barras barras;
 
     public telaInicialController(JFrame parent) {
         this.parent = parent;
@@ -34,10 +38,11 @@ public class telaInicialController {
     }
 
     private void init() {
-        tela.getBtnEsforcos().addActionListener(e ->lancarEsforcos());
+        tela.getBtnProp().addActionListener(e -> lancarMateriais());
+        tela.getBtnEsforcos().addActionListener(e -> lancarEsforcos());
         tela.getBtnSecao().addActionListener(e -> abrirSecao(e));
         tela.getBtnEsforcos().setEnabled(false);
-        tela.getBtnProp().setEnabled(false);
+        //tela.getBtnProp().setEnabled(false);
         tela.getBtnConfig().setEnabled(false);
         tela.getBtnAbaco().setEnabled(false);
         tela.getBtnResults().setEnabled(false);
@@ -69,7 +74,7 @@ public class telaInicialController {
 
         if (sdc.getSecEnviar() == null) {
             tela.getBtnEsforcos().setEnabled(false);
-            
+
         } else {
             tela.getBtnEsforcos().setEnabled(true);
             secaoTransversal = sdc.getSecEnviar();
@@ -77,12 +82,13 @@ public class telaInicialController {
             // Apenas para verificar se esta tudo certo! apos o termino do programa, será removido
             System.out.println("Qtd de vertices: " + secaoTransversal.getNumVertice());
             System.out.println("QTS de barras: " + secaoTransversal.getNumBars());
-            System.out.println("centroide: "+ secaoTransversal.getCentroide().getX()+", "+ secaoTransversal.getCentroide().getY());
-            System.out.println("AREA: "+ secaoTransversal.getArea());
-            System.out.println("BArs AREA: "+ secaoTransversal.getBars().getAreaBars());
+            System.out.println("centroide: " + secaoTransversal.getCentroide().getX() + ", " + secaoTransversal.getCentroide().getY());
+            System.out.println("AREA: " + secaoTransversal.getArea());
+            System.out.println("BArs AREA: " + secaoTransversal.getBars().getAreaBars());
+
             tela.getBtnSecao().setEnabled(false);
         }
-        
+
     }
 
     /**
@@ -91,8 +97,21 @@ public class telaInicialController {
     public JFrame getFrame() {
         return frame;
     }
-    private void lancarEsforcos(){
+
+    private void lancarEsforcos() {
         LancaEsforcosController lec = new LancaEsforcosController(frame);
+        if (lec.getEsforcos() != null) {
+            esforcos = lec.getEsforcos();
+            System.out.println("Esforcos: " + esforcos.getMxk());
+        }
     }
 
+    private void lancarMateriais() {
+        MateriaisController mc = new MateriaisController(frame);
+        if (mc.getMateriais() != null) {
+            materiais = mc.getMateriais();
+            // apenas verificaçoes de funcionamento do code
+            System.out.println("Concreto fck: " + materiais.getConcrete().getFck() + ", " + "Aço: " + materiais.getAco().getTypeAco() + "Ecs: " + materiais.getConcrete().getModuloElasticidade());
+        }
+    }
 }
