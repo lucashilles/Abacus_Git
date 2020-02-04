@@ -38,6 +38,7 @@ public class telaInicialController {
     }
 
     private void init() {
+        tela.getBtnConfig().addActionListener(e -> lancarCoeficientes());
         tela.getBtnProp().addActionListener(e -> lancarMateriais());
         tela.getBtnEsforcos().addActionListener(e -> lancarEsforcos());
         tela.getBtnSecao().addActionListener(e -> abrirSecao(e));
@@ -111,7 +112,18 @@ public class telaInicialController {
         if (mc.getMateriais() != null) {
             materiais = mc.getMateriais();
             // apenas verificaçoes de funcionamento do code
+            System.out.println("Def: " + materiais.getConcrete().getDeformacaoE0() + " eu: " + materiais.getConcrete().getDeformacaoEu());
+            materiais.getConcrete().setFcd((float) 1.4);
+            System.out.println("fcd: " + materiais.getConcrete().getFcd());
+            materiais.getConcrete().setSigmaCD();
+            System.out.println("SigmaCD: " + materiais.getConcrete().getSigmacd());
             System.out.println("Concreto fck: " + materiais.getConcrete().getFck() + ", " + "Aço: " + materiais.getAco().getTypeAco() + "Ecs: " + materiais.getConcrete().getModuloElasticidade());
+            tela.getBtnConfig().setEnabled(true);
         }
+
+    }
+
+    private void lancarCoeficientes() {
+        CoeficientesViewController CVC  = new CoeficientesViewController(frame,materiais);
     }
 }

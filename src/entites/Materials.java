@@ -11,13 +11,17 @@ package entites;
  */
 public class Materials {
 
-    private Concreto concrete;
-    private Aco aco;
+    private Concreto concrete= null;
+    private Aco aco = null;
+    private Coeficientes coef=null;
 
     public Materials(Concreto conc, Aco aco) {
         this.concrete = conc;
         this.aco = aco;
 
+    }
+    public void setCoeficiente(Coeficientes coef){
+        this.coef = coef;
     }
 
     /**
@@ -32,6 +36,13 @@ public class Materials {
      */
     public Aco getAco() {
         return aco;
+    }
+
+    /**
+     * @return the coef
+     */
+    public Coeficientes getCoef() {
+        return coef;
     }
 
 }

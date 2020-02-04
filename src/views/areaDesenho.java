@@ -75,14 +75,19 @@ public class areaDesenho extends javax.swing.JPanel {
         g2.draw(new Line2D.Float((float) (getZoom() * fim.getX()), (float) getZoom() * fim.getY() * (-1), (float) (getZoom() * inicio.getX()), (float) getZoom() * inicio.getY() * (-1)));
     }
 
+    private void drawLinesCG(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.draw(new Line2D.Float((float) (getZoom() * centroide.getX()), 0, (float) (getZoom() * centroide.getX()), -getHeight()));
+        g2.draw(new Line2D.Float((float) (getZoom() * centroide.getX()), 0, (float) (getZoom() * centroide.getX()), +getHeight()));
+        g2.draw(new Line2D.Float((float) -getWidth(), (float) (getZoom() * centroide.getY() * (-1)), (float) +getWidth(), (float) ((-1) * getZoom() * centroide.getY())));
+    }
+
     private void drawPoint(Graphics g, float x, float y) {
         Graphics2D g2 = (Graphics2D) g;
-        Shape circle = new Arc2D.Float((float) (getZoom() * x) - 1, (float) (getZoom() * y*(-1)) - 1, 2, 2, 0, 360, Arc2D.CHORD);
+        Shape circle = new Arc2D.Float((float) (getZoom() * x) - 1, (float) (getZoom() * y * (-1)) - 1, 2, 2, 0, 360, Arc2D.CHORD);
         g2.fill(circle);
-       
-       
-        //g.fillOval((int) getZoom()*Math.round(x)-1, (1+((int) getZoom()* Math.round(y)))*(-1), 2, 2);
 
+        //g.fillOval((int) getZoom()*Math.round(x)-1, (1+((int) getZoom()* Math.round(y)))*(-1), 2, 2);
     }
 
     private void updateCentro() {
@@ -114,7 +119,7 @@ public class areaDesenho extends javax.swing.JPanel {
         if (v.size() > 1) {
             updateCentro();
         }
-        
+
         repaint();
         validate();
     }
@@ -170,8 +175,12 @@ public class areaDesenho extends javax.swing.JPanel {
 
         if (centroide != null) {
             if (vertices.size() > 2) {
+                
+                g2.setColor(Color.lightGray);
+                drawLinesCG(g);
                 g2.setColor(Color.green);
                 drawPoint(g, centroide.getX(), centroide.getY());
+
             }
         }
         if (bars.size() > 0) {
