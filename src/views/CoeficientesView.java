@@ -5,6 +5,10 @@
  */
 package views;
 
+import javax.swing.JButton;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Administrador
@@ -18,6 +22,62 @@ public class CoeficientesView extends javax.swing.JPanel {
         initComponents();
     }
 
+    public JTabbedPane getJTPane() {
+        return JTPane;
+    }
+
+    public JTextField getTxtgamaEsforcos() {
+        return txtgamaEsforcos;
+    }
+
+    public JButton getbtnConfirmargama() {
+        return btnConfirmarGama;
+    }
+
+    public JButton getBtnConfirmarGamas() {
+        return btnConfirmarGamas;
+    }
+
+    public JTextField getTxtGamac() {
+        return txtgamaC;
+    }
+
+    public JTextField getTxtGamaF() {
+        return txtgamaF;
+    }
+
+    public JButton getBtnOK() {
+        return btnOK;
+    }
+
+    public JTextField getTxtLambda() {
+        return txtLambda;
+    }
+
+    public JTextField getTxtalfa() {
+        return txtAlfa;
+    }
+
+    public JTextField getTxtSigmaCd() {
+        return txtSigmaCd;
+    }
+
+    public JTextField getTxtFcd() {
+        return txtFcd;
+    }
+
+    public JTextField getTxtE0() {
+        return txtE0;
+    }
+
+    public JTextField getTxtEu() {
+        return txtEu;
+    }
+
+    public JTextField getTxtEuAco() {
+        return txtEuAco;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,33 +88,33 @@ public class CoeficientesView extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        JTPane = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtgamaC = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        txtgamaF = new javax.swing.JTextField();
+        btnConfirmarGamas = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtLambda = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtAlfa = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtFcd = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        txtSigmaCd = new javax.swing.JTextField();
+        txtEuAco = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        txtE0 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        txtEu = new javax.swing.JTextField();
+        btnOK = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtgamaEsforcos = new javax.swing.JTextField();
+        btnConfirmarGama = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -68,14 +128,14 @@ public class CoeficientesView extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         jPanel1.add(jLabel1, gridBagConstraints);
 
-        jTextField1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("1.4");
-        jTextField1.setPreferredSize(new java.awt.Dimension(30, 20));
+        txtgamaC.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtgamaC.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtgamaC.setText("1.4");
+        txtgamaC.setPreferredSize(new java.awt.Dimension(30, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        jPanel1.add(jTextField1, gridBagConstraints);
+        jPanel1.add(txtgamaC, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel2.setText("γf: ");
@@ -86,25 +146,25 @@ public class CoeficientesView extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         jPanel1.add(jLabel2, gridBagConstraints);
 
-        jTextField2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField2.setText("1.15");
-        jTextField2.setPreferredSize(new java.awt.Dimension(30, 20));
+        txtgamaF.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtgamaF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtgamaF.setText("1.15");
+        txtgamaF.setPreferredSize(new java.awt.Dimension(30, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        jPanel1.add(jTextField2, gridBagConstraints);
+        jPanel1.add(txtgamaF, gridBagConstraints);
 
-        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jButton2.setText("Confirmar");
+        btnConfirmarGamas.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnConfirmarGamas.setText("Confirmar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        jPanel1.add(jButton2, gridBagConstraints);
+        jPanel1.add(btnConfirmarGamas, gridBagConstraints);
 
-        jTabbedPane1.addTab("Coeficientes de minoração", jPanel1);
+        JTPane.addTab("Coeficientes de minoração", jPanel1);
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
@@ -114,13 +174,13 @@ public class CoeficientesView extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         jPanel2.add(jLabel4, gridBagConstraints);
 
-        jTextField4.setEditable(false);
-        jTextField4.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField4.setPreferredSize(new java.awt.Dimension(30, 20));
+        txtLambda.setEditable(false);
+        txtLambda.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtLambda.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtLambda.setPreferredSize(new java.awt.Dimension(30, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        jPanel2.add(jTextField4, gridBagConstraints);
+        jPanel2.add(txtLambda, gridBagConstraints);
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel5.setText("αc: ");
@@ -128,13 +188,13 @@ public class CoeficientesView extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         jPanel2.add(jLabel5, gridBagConstraints);
 
-        jTextField5.setEditable(false);
-        jTextField5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField5.setPreferredSize(new java.awt.Dimension(30, 20));
+        txtAlfa.setEditable(false);
+        txtAlfa.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtAlfa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtAlfa.setPreferredSize(new java.awt.Dimension(30, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        jPanel2.add(jTextField5, gridBagConstraints);
+        jPanel2.add(txtAlfa, gridBagConstraints);
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel6.setText("fcd (MPa): ");
@@ -144,17 +204,17 @@ public class CoeficientesView extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         jPanel2.add(jLabel6, gridBagConstraints);
 
-        jTextField6.setEditable(false);
-        jTextField6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setPreferredSize(new java.awt.Dimension(30, 20));
+        txtFcd.setEditable(false);
+        txtFcd.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtFcd.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtFcd.setPreferredSize(new java.awt.Dimension(30, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        jPanel2.add(jTextField6, gridBagConstraints);
+        jPanel2.add(txtFcd, gridBagConstraints);
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel7.setText("σcd (MPa): ");
@@ -164,27 +224,26 @@ public class CoeficientesView extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         jPanel2.add(jLabel7, gridBagConstraints);
 
-        jTextField7.setEditable(false);
-        jTextField7.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtSigmaCd.setEditable(false);
+        txtSigmaCd.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtSigmaCd.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        jPanel2.add(jTextField7, gridBagConstraints);
+        jPanel2.add(txtSigmaCd, gridBagConstraints);
 
-        jTextField8.setEditable(false);
-        jTextField8.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField8.setText("10");
-        jTextField8.setPreferredSize(new java.awt.Dimension(30, 20));
+        txtEuAco.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtEuAco.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtEuAco.setText("10");
+        txtEuAco.setPreferredSize(new java.awt.Dimension(30, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        jPanel2.add(jTextField8, gridBagConstraints);
+        jPanel2.add(txtEuAco, gridBagConstraints);
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel8.setText("εuAco (‰): ");
@@ -204,15 +263,15 @@ public class CoeficientesView extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         jPanel2.add(jLabel9, gridBagConstraints);
 
-        jTextField9.setEditable(false);
-        jTextField9.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jTextField9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField9.setPreferredSize(new java.awt.Dimension(30, 20));
+        txtE0.setEditable(false);
+        txtE0.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtE0.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtE0.setPreferredSize(new java.awt.Dimension(30, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        jPanel2.add(jTextField9, gridBagConstraints);
+        jPanel2.add(txtE0, gridBagConstraints);
 
         jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel10.setText("εu (‰): ");
@@ -223,27 +282,27 @@ public class CoeficientesView extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         jPanel2.add(jLabel10, gridBagConstraints);
 
-        jTextField10.setEditable(false);
-        jTextField10.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jTextField10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField10.setPreferredSize(new java.awt.Dimension(30, 20));
+        txtEu.setEditable(false);
+        txtEu.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtEu.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtEu.setPreferredSize(new java.awt.Dimension(30, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        jPanel2.add(jTextField10, gridBagConstraints);
+        jPanel2.add(txtEu, gridBagConstraints);
 
-        jButton3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jButton3.setText("OK");
+        btnOK.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnOK.setText("OK");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        jPanel2.add(jButton3, gridBagConstraints);
+        jPanel2.add(btnOK, gridBagConstraints);
 
-        jTabbedPane1.addTab("Parâmetros obtidos", jPanel2);
+        JTPane.addTab("Parâmetros obtidos", jPanel2);
 
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
@@ -254,34 +313,35 @@ public class CoeficientesView extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 4);
         jPanel3.add(jLabel3, gridBagConstraints);
 
-        jTextField3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setText("1.4");
-        jTextField3.setPreferredSize(new java.awt.Dimension(30, 20));
+        txtgamaEsforcos.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtgamaEsforcos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtgamaEsforcos.setText("1.4");
+        txtgamaEsforcos.setPreferredSize(new java.awt.Dimension(30, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 4);
-        jPanel3.add(jTextField3, gridBagConstraints);
+        jPanel3.add(txtgamaEsforcos, gridBagConstraints);
 
-        jButton1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jButton1.setText("Confirmar");
+        btnConfirmarGama.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnConfirmarGama.setText("Confirmar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 4);
-        jPanel3.add(jButton1, gridBagConstraints);
+        jPanel3.add(btnConfirmarGama, gridBagConstraints);
 
-        jTabbedPane1.addTab("Coeficiente de marjoração dos esforços", jPanel3);
+        JTPane.addTab("Coeficiente de marjoração dos esforços", jPanel3);
 
-        add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+        add(JTPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JTabbedPane JTPane;
+    private javax.swing.JButton btnConfirmarGama;
+    private javax.swing.JButton btnConfirmarGamas;
+    private javax.swing.JButton btnOK;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -295,16 +355,15 @@ public class CoeficientesView extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField txtAlfa;
+    private javax.swing.JTextField txtE0;
+    private javax.swing.JTextField txtEu;
+    private javax.swing.JTextField txtEuAco;
+    private javax.swing.JTextField txtFcd;
+    private javax.swing.JTextField txtLambda;
+    private javax.swing.JTextField txtSigmaCd;
+    private javax.swing.JTextField txtgamaC;
+    private javax.swing.JTextField txtgamaEsforcos;
+    private javax.swing.JTextField txtgamaF;
     // End of variables declaration//GEN-END:variables
 }

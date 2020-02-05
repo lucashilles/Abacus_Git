@@ -28,6 +28,7 @@ public class telaInicialController {
     private telaInicial tela;
     private secaoTransversal secaoTransversal;
     private Esforcos esforcos;
+    private Esforcos esforcosCalculo;
     // private Barras barras;
 
     public telaInicialController(JFrame parent) {
@@ -122,8 +123,22 @@ public class telaInicialController {
         }
 
     }
-
+    // terminar o code implemetation
     private void lancarCoeficientes() {
         CoeficientesViewController CVC  = new CoeficientesViewController(frame,materiais);
+        this.materiais.setCoeficiente(CVC.getCoeficientes());
+        this.materiais.getAco().setFyd((float) materiais.getCoef().getGamaS());
+        this.materiais.getAco().setDefAco(CVC.getEuAco());
+        this.esforcosCalculo = new Esforcos((float) (esforcos.getMxk()* materiais.getCoef().getGamaEsforcos()),(float)(esforcos.getMyk()*materiais.getCoef().getGamaEsforcos()),(float)(esforcos.getNk()*materiais.getCoef().getGamaEsforcos()));
+        System.out.println("Fyd: " + materiais.getAco().getFyd());
+        // testando code
+        System.out.println("SigmaCD : " + materiais.getConcrete().getSigmacd());
+    }
+
+    /**
+     * @return the esforcosCalculo
+     */
+    public Esforcos getEsforcosCalculo() {
+        return esforcosCalculo;
     }
 }
