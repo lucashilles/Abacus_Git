@@ -10,11 +10,13 @@ package entites;
  * @author Administrador
  */
 public class Esforcos {
-    private float Mxk;
-    private float Myk;
-    private float Nk;
+    private float Mxk =0f;
+    private float Myk =0f;
+    private float Nk = 0f;
     private float ex;
     private float ey;
+    private float Md =0f;
+    private double tetaD = 0; // radians
     
     
 public Esforcos(float mx, float my, float nk){
@@ -22,9 +24,29 @@ public Esforcos(float mx, float my, float nk){
     this.Myk = my;
     this.Nk = nk;
     gerarExcentricidades();
+    gerarMD();
+    gerarTeta();
 
 }
-// em meters
+//em radianos
+private void gerarTeta(){
+    if(this.Md != 0f){
+        double teta=0;
+        teta = Math.acos((double)(this.Mxk/this.Md));
+        this.tetaD = teta;
+        //teste
+        System.out.println("TetaD: "+ this.tetaD);
+    }
+}
+// kN.m
+private void gerarMD(){
+    float md;
+    md = (float) Math.sqrt((double)Math.pow((double)Mxk, 2)+(double)Math.pow((double)Myk, 2));
+    this.Md = md;
+    // verificação
+    System.out.println("MD: "+ this.Md);
+}
+// in meters
 private void gerarExcentricidades(){
     this.ex = (Mxk/Nk);
     this.ey = (Myk/Nk);
@@ -63,6 +85,20 @@ private void gerarExcentricidades(){
      */
     public float getEy() {
         return ey;
+    }
+
+    /**
+     * @return the Md
+     */
+    public float getMd() {
+        return Md;
+    }
+
+    /**
+     * @return the tetaD
+     */
+    public double getTetaD() {
+        return tetaD;
     }
     
 }

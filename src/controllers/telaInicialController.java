@@ -16,6 +16,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import views.telaInicial;
+import entites.metodoIterativo;
 
 /**
  *
@@ -39,6 +40,7 @@ public class telaInicialController {
     }
 
     private void init() {
+        tela.getBtnAbaco().addActionListener(e -> metodoIterativo());
         tela.getBtnConfig().addActionListener(e -> lancarCoeficientes());
         tela.getBtnProp().addActionListener(e -> lancarMateriais());
         tela.getBtnEsforcos().addActionListener(e -> lancarEsforcos());
@@ -46,7 +48,7 @@ public class telaInicialController {
         tela.getBtnEsforcos().setEnabled(false);
         //tela.getBtnProp().setEnabled(false);
         tela.getBtnConfig().setEnabled(false);
-        tela.getBtnAbaco().setEnabled(false);
+        //tela.getBtnAbaco().setEnabled(false);
         tela.getBtnResults().setEnabled(false);
         frame = new JFrame(parent.getTitle());
         frame.add(tela);
@@ -80,7 +82,7 @@ public class telaInicialController {
         } else {
             tela.getBtnEsforcos().setEnabled(true);
             secaoTransversal = sdc.getSecEnviar();
-            //barras = sdc.getBars();
+            
             // Apenas para verificar se esta tudo certo! apos o termino do programa, será removido
             System.out.println("Qtd de vertices: " + secaoTransversal.getNumVertice());
             System.out.println("QTS de barras: " + secaoTransversal.getNumBars());
@@ -133,6 +135,10 @@ public class telaInicialController {
         System.out.println("Fyd: " + materiais.getAco().getFyd());
         // testando code
         System.out.println("SigmaCD : " + materiais.getConcrete().getSigmacd());
+    }
+    private void metodoIterativo(){
+        // code apenas para verificação do funcionamento da classe - 
+        metodoIterativo met = new metodoIterativo(secaoTransversal, esforcosCalculo);
     }
 
     /**
