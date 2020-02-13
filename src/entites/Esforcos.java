@@ -16,7 +16,7 @@ public class Esforcos {
     private float ex;
     private float ey;
     private float Md =0f;
-    private double tetaD = 0; // radians
+    private double tetaD = 0; // graus
     
     
 public Esforcos(float mx, float my, float nk){
@@ -28,11 +28,11 @@ public Esforcos(float mx, float my, float nk){
     gerarTeta();
 
 }
-//em radianos
+//em graus
 private void gerarTeta(){
     if(this.Md != 0f){
-        double teta=0;
-        teta = Math.acos((double)(this.Mxk/this.Md));
+        double teta;
+        teta = (float)(Math.acos(((this.Mxk/this.Md)))*(180/Math.PI));
         this.tetaD = teta;
         //teste
         System.out.println("TetaD: "+ this.tetaD);

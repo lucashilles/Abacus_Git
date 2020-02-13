@@ -82,7 +82,7 @@ public class telaInicialController {
         } else {
             tela.getBtnEsforcos().setEnabled(true);
             secaoTransversal = sdc.getSecEnviar();
-            
+
             // Apenas para verificar se esta tudo certo! apos o termino do programa, será removido
             System.out.println("Qtd de vertices: " + secaoTransversal.getNumVertice());
             System.out.println("QTS de barras: " + secaoTransversal.getNumBars());
@@ -125,20 +125,24 @@ public class telaInicialController {
         }
 
     }
+
     // terminar o code implemetation
+
     private void lancarCoeficientes() {
-        CoeficientesViewController CVC  = new CoeficientesViewController(frame,materiais);
+        CoeficientesViewController CVC = new CoeficientesViewController(frame, materiais);
         this.materiais.setCoeficiente(CVC.getCoeficientes());
         this.materiais.getAco().setFyd((float) materiais.getCoef().getGamaS());
         this.materiais.getAco().setDefAco(CVC.getEuAco());
-        this.esforcosCalculo = new Esforcos((float) (esforcos.getMxk()* materiais.getCoef().getGamaEsforcos()),(float)(esforcos.getMyk()*materiais.getCoef().getGamaEsforcos()),(float)(esforcos.getNk()*materiais.getCoef().getGamaEsforcos()));
+        this.esforcosCalculo = new Esforcos((float) (esforcos.getMxk() * materiais.getCoef().getGamaEsforcos()), (float) (esforcos.getMyk() * materiais.getCoef().getGamaEsforcos()), (float) (esforcos.getNk() * materiais.getCoef().getGamaEsforcos()));
         System.out.println("Fyd: " + materiais.getAco().getFyd());
         // testando code
         System.out.println("SigmaCD : " + materiais.getConcrete().getSigmacd());
     }
-    private void metodoIterativo(){
+
+    private void metodoIterativo() {
         // code apenas para verificação do funcionamento da classe - 
-        metodoIterativo met = new metodoIterativo(secaoTransversal, esforcosCalculo);
+        metodoIterativo metodo = new metodoIterativo(this.secaoTransversal,this.materiais,this.esforcosCalculo,this.materiais.getCoef());
+
     }
 
     /**

@@ -10,7 +10,7 @@ package entites;
  * @author Administrador
  */
 public class Concreto {
-
+    private float k = 0f; // admensional
     private float fck = 0f; // MPa
     private float ModuloElasticidade; // Mpa
     private float alfac;
@@ -45,12 +45,14 @@ public class Concreto {
             this.lambda = (float) 0.8;
             this.deformacaoE0 = (float) 2.0;
             this.deformacaoEu = (float) 3.5;
+            
         } else {
             this.alfac = (float) (0.85 * (1 - ((fck - 50) / 200)));
             this.lambda = (float) (0.8 - ((fck - 50) / 400));
             this.deformacaoE0 = (float) (2+0.085*(Math.pow((fck - 50),0.53)));
             this.deformacaoEu = (float)(2.6+35*(Math.pow(((90-fck)/100), 4)));
         }
+        this.k = 1 -(this.deformacaoE0/this.deformacaoEu);
     }
 
     private void gerarEcs() {
@@ -151,6 +153,13 @@ public class Concreto {
      */
     public float getDeformacaoEu() {
         return deformacaoEu;
+    }
+
+    /**
+     * @return the k
+     */
+    public float getK() {
+        return k;
     }
 
 }

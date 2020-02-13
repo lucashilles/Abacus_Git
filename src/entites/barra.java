@@ -10,7 +10,7 @@ package entites;
  * @author Administrador
  */
 public class barra {
-
+    private float di = 0f;
     private float diametro = 0f;
     private float x, y;
     private float area = 0f;
@@ -77,6 +77,20 @@ public class barra {
      */
     public void setY(float y) {
         this.y = y;
+    }
+
+    /**
+     * @return the di
+     */
+    public float getDi() {
+        return di;
+    }
+
+    /**
+     * @param di the di to set
+     */
+    public void setDi(float di) {
+        this.di = di;
     }
 
 }
