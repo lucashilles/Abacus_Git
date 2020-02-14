@@ -14,6 +14,7 @@ public class barra {
     private float diametro = 0f;
     private float x, y;
     private float area = 0f;
+    private float defbarra = 0f;
 
     public barra(float diametro, float x, float y) {
         this.diametro = diametro;
@@ -91,6 +92,20 @@ public class barra {
      */
     public void setDi(float di) {
         this.di = di;
+    }
+
+    /**
+     * @return the defbarra
+     */
+    public float getDefbarra() {
+        return defbarra;
+    }
+
+    /**
+     * @param defbarra the defbarra to set
+     */
+    public void setDefbarra(float defbarra) {
+        this.defbarra = defbarra;
     }
 
 }
