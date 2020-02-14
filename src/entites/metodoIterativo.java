@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class metodoIterativo {
 
+    secaoTransversal secACC = null;
     float h, d;
     dominiosDeformacao dominios;
     secaoTransversal secRecebida;
@@ -22,6 +23,7 @@ public class metodoIterativo {
     Coeficientes coefRecebido;
     secaoTransversal secTransladada = null;
     secaoTransversal secRotate = null;
+    secaoTransversal secUnRotate = null;
 
     public metodoIterativo(secaoTransversal sec, Materials material, Esforcos esforcos, Coeficientes coef) {
         this.secRecebida = sec;
@@ -107,6 +109,8 @@ public class metodoIterativo {
 
         }
         ACC(this.secRotate, ymax, 3);
+        unrotate(secACC, getAlfaINICIAL(this.esforcosRecebido));
+        staticsMomentos(this.secUnRotate);
     }
 
     private void translate(secaoTransversal sec) {
@@ -163,7 +167,7 @@ public class metodoIterativo {
     private float ACC(secaoTransversal sec, float ymax, float x0) {
         secaoTransversal secT = new secaoTransversal();
         float deltaX, deltaY;
-        float area = 0f;
+        
         float gamac;
         gamac = ymax - this.matRecebido.getConcrete().getLambda() * x0;
         for (int i = 0; i < sec.getVertices().size(); i++) {
@@ -191,11 +195,57 @@ public class metodoIterativo {
             }
 
         }
-        for(int m = 0 ;  m < secT.getVertices().size(); m++){
-            System.out.println("Vcc: "+ secT.getVertices().get(m).getX()+"; "+secT.getVertices().get(m).getY());
+        for (int m = 0; m < secT.getVertices().size(); m++) {
+            System.out.println("Vcc: " + secT.getVertices().get(m).getX() + "; " + secT.getVertices().get(m).getY());
         }
         System.out.println("tamanho: " + secT.getVertices().size());
         System.out.println("Area CC: " + secT.getArea());
+        //unrotate(secT, getAlfaINICIAL(this.esforcosRecebido));
+        //staticsMomentos(this.secUnRotate);
+        secACC = secT;
         return secT.getArea();
+    }
+
+    private void staticsMomentos(secaoTransversal s) {
+        float sx = 0f, sy = 0f;
+        for (int i = 0; i < s.getVertices().size(); i++) {
+            Vertice a, b;
+            float deltax, deltay;
+            if (i < s.getVertices().size() - 1) {
+                a = s.getVertices().get(i);
+                b = s.getVertices().get(i + 1);
+            } else {
+                a = s.getVertices().get(i);
+                b = s.getVertices().get(0);
+            }
+            deltax = b.getX() - a.getX();
+            deltay = b.getY() - a.getY();
+            System.out.println("Dx: "+ deltax+ "& Dy: "+ deltay);
+            sx += deltay * (3 * a.getX() * b.getX() + ((float)Math.pow(deltax, 2)));
+            sy += deltax*(3 * a.getY() * b.getY() + ((float)Math.pow(deltay, 2)));
+            System.out.println("sx parcial: "+ sx);
+        }
+        sx = sx / 6;
+        sy = sy/-6;
+        
+
+        System.out.println("Sx: " + sx);
+        System.out.println("Sy: "+ sy);
+    }
+
+    private void unrotate(secaoTransversal s, float angulo) {
+        secaoTransversal sec = new secaoTransversal();
+        for (Vertice v : s.getVertices()) {
+
+            float x, y;
+            x = v.getX() * (float) Math.cos(angulo * (Math.PI / 180)) - v.getY() * (float) Math.sin(angulo * (Math.PI / 180));
+            y = v.getX() * (float) Math.sin(angulo * (Math.PI / 180)) + v.getY() * (float) Math.cos(angulo * (Math.PI / 180));
+            Vertice vs = new Vertice(x, y);
+            sec.addVertice(vs);
+            System.out.println("nrmal v: " + vs.getX() + "; " + vs.getY());
+
+        }
+        this.secUnRotate = sec;
+        System.out.println("Area ver: " + this.secUnRotate.getArea());
     }
 }
