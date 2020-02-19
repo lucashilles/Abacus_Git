@@ -5,8 +5,8 @@
  */
 package controllers;
 
-import entites.Barras;
 import entites.Esforcos;
+import entites.LinhaNeutra;
 import entites.Materials;
 import entites.secaoTransversal;
 import java.awt.Toolkit;
@@ -16,7 +16,6 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import views.telaInicial;
-import entites.metodoIterativo;
 
 /**
  *
@@ -116,9 +115,9 @@ public class telaInicialController {
             materiais = mc.getMateriais();
             // apenas verificaçoes de funcionamento do code
             System.out.println("Def: " + materiais.getConcrete().getDeformacaoE0() + " eu: " + materiais.getConcrete().getDeformacaoEu());
-            materiais.getConcrete().setFcd((float) 1.4);
+            //materiais.getConcrete().setFcd((float) 1.4);
             System.out.println("fcd: " + materiais.getConcrete().getFcd());
-            materiais.getConcrete().setSigmaCD();
+
             System.out.println("SigmaCD: " + materiais.getConcrete().getSigmacd());
             System.out.println("Concreto fck: " + materiais.getConcrete().getFck() + ", " + "Aço: " + materiais.getAco().getTypeAco() + "Ecs: " + materiais.getConcrete().getModuloElasticidade());
             tela.getBtnConfig().setEnabled(true);
@@ -127,22 +126,34 @@ public class telaInicialController {
     }
 
     // terminar o code implemetation
-
     private void lancarCoeficientes() {
         CoeficientesViewController CVC = new CoeficientesViewController(frame, materiais);
         this.materiais.setCoeficiente(CVC.getCoeficientes());
         this.materiais.getAco().setFyd((float) materiais.getCoef().getGamaS());
+        this.materiais.getConcrete().setFcd((float) this.materiais.getCoef().getGamaC());
+        this.materiais.getConcrete().setSigmaCD();
+
         this.materiais.getAco().setDefAco(CVC.getEuAco());
         this.esforcosCalculo = new Esforcos((float) (esforcos.getMxk() * materiais.getCoef().getGamaEsforcos()), (float) (esforcos.getMyk() * materiais.getCoef().getGamaEsforcos()), (float) (esforcos.getNk() * materiais.getCoef().getGamaEsforcos()));
+
         System.out.println("Fyd: " + materiais.getAco().getFyd());
         // testando code
         System.out.println("SigmaCD : " + materiais.getConcrete().getSigmacd());
     }
 
     private void metodoIterativo() {
+        float xini = 0;
+        float xfim = 1000;
+        float r1, r2, re1;
+        float tol = (float) 0.001;
+        float e1;
         // code apenas para verificação do funcionamento da classe - 
-        metodoIterativo metodo = new metodoIterativo(this.secaoTransversal,this.materiais,this.esforcosCalculo,this.materiais.getCoef());
-
+        LinhaNeutra Ln = new LinhaNeutra(this.secaoTransversal, this.materiais, this.esforcosCalculo);
+        Ln.comecar(xini, 45);
+        r1 = Ln.getFx();
+        LinhaNeutra Ln2 = new LinhaNeutra(this.secaoTransversal, this.materiais, this.esforcosCalculo);
+        Ln2.comecar(xfim, 45);
+        r2 = Ln2.getFx();
     }
 
     /**

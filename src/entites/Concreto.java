@@ -24,6 +24,7 @@ public class Concreto {
         this.fck = fck;
         gerarParametros(fck);
         gerarEcs();
+        
     }
     
 

@@ -15,6 +15,7 @@ public class barra {
     private float x, y;
     private float area = 0f;
     private float defbarra = 0f;
+    private float tensaoBarra = 0f;
 
     public barra(float diametro, float x, float y) {
         this.diametro = diametro;
@@ -22,6 +23,10 @@ public class barra {
         this.x = x;
         this.y = y;
 
+    }
+    //MPascal
+    public void setTensao( float ECS){
+        this.tensaoBarra = (this.defbarra)*(ECS/10);//kN/cm²
     }
     private void areaBar(){
         float aux;
@@ -106,6 +111,13 @@ public class barra {
      */
     public void setDefbarra(float defbarra) {
         this.defbarra = defbarra;
+    }
+
+    /**
+     * @return the tensaoBarra
+     */
+    public float getTensaoBarra() {
+        return tensaoBarra;
     }
 
 }

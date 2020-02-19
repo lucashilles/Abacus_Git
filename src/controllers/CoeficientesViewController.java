@@ -70,6 +70,7 @@ public class CoeficientesViewController {
             this.gamaF = gmaf;
             //this.coeficientes = new Coeficientes(materiais,(double)this.gamaC,(double) this.gamaF,(double) this.gamaEsforcos);
             this.materiais.getConcrete().setFcd((float) this.gamaC);
+            this.materiais.getConcrete().setSigmaCD();
             view.getTxtLambda().setText(String.format("%.2f", materiais.getConcrete().getLambda()));
             view.getTxtalfa().setText(String.format("%.2f", materiais.getConcrete().getAlfac()));
             view.getTxtFcd().setText(String.format("%.2f", materiais.getConcrete().getFcd()));
