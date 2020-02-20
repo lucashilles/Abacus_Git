@@ -142,18 +142,15 @@ public class telaInicialController {
     }
 
     private void metodoIterativo() {
-        float xini = 0;
-        float xfim = 1000;
-        float r1, r2, re1;
-        float tol = (float) 0.001;
-        float e1;
-        // code apenas para verificação do funcionamento da classe - 
+
         LinhaNeutra Ln = new LinhaNeutra(this.secaoTransversal, this.materiais, this.esforcosCalculo);
-        Ln.comecar(xini, 45);
-        r1 = Ln.getFx();
-        LinhaNeutra Ln2 = new LinhaNeutra(this.secaoTransversal, this.materiais, this.esforcosCalculo);
-        Ln2.comecar(xfim, 45);
-        r2 = Ln2.getFx();
+        
+
+        
+
+                
+                
+
     }
 
     /**

@@ -35,7 +35,8 @@ public class LinhaNeutra {
         this.esforcosRecebidos = esforcosRecebidos;
     }
 
-    public void comecar(float X0, float alfa) {
+    public float comecar(float X0, float alfa) {
+        float result;
         this.X0 = X0;
         this.alfa = alfa;
         Translate(this.secaoRecebida);
@@ -47,26 +48,29 @@ public class LinhaNeutra {
         unrotate(this.secACC, alfa);
         staticsMomentos(this.secUnRotate);
         this.momentosResistentes = EquilibrioEquacoes(this.acc, this.secRotate, this.secTransladada, this.materiais, this.Sx, this.Sy);
-        this.fx = capacidadeResistente(this.secRotate,this.acc,this.momentosResistentes);
+        result = capacidadeResistente(this.secRotate, this.acc, this.momentosResistentes);
+        return result;
     }
+
+  
 
     private float capacidadeResistente(secaoTransversal secTensao, float Acc, Esforcos momentosR) {
         float tensoes = 0f;
         float areaB;
-        float fx;
+        float fxs;
         for (int i = 0; i < secTensao.getBars().getBarras().size(); i++) {
             areaB = (secTensao.getBars().getBarras().get(i).getArea()) / 100;
             tensoes += areaB * (secTensao.getBars().getBarras().get(i).getTensaoBarra());
             System.out.println("");
-            System.out.println("area B: "+ areaB);
+            System.out.println("area B: " + areaB);
             System.out.println("");
-            System.out.println("tensao: "+ tensoes);
+            System.out.println("Forca: " + tensoes);
         }
-        System.out.println("acc: "+ Acc);
-        System.out.println("SigmaCD: "+this.materiais.getConcrete().getSigmacd() / 10);
-        fx = (momentosR.getNk()) - Acc * (this.materiais.getConcrete().getSigmacd() / 10) - tensoes;
-        System.out.println("Fx: " + fx);
-        return fx;
+        System.out.println("acc: " + Acc);
+        System.out.println("SigmaCD: " + this.materiais.getConcrete().getSigmacd() / 10);
+        fxs = (momentosR.getNk()) - Acc * (this.materiais.getConcrete().getSigmacd() / 10) - tensoes;
+        System.out.println("Fx: " + fxs);
+        return fxs;
     }
 
     private Esforcos EquilibrioEquacoes(float Acc, secaoTransversal secTensao, secaoTransversal secTransladada, Materials conc, float sX, float sY) {
