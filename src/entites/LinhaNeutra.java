@@ -35,6 +35,8 @@ public class LinhaNeutra {
         this.esforcosRecebidos = esforcosRecebidos;
     }
 
+    // me retorna o valor  da equação 4.6.1 livro verde araujo
+
     public float comecar(float X0, float alfa) {
         float result;
         this.X0 = X0;
@@ -42,7 +44,7 @@ public class LinhaNeutra {
         Translate(this.secaoRecebida);
         Rotate(this.secTransladada, alfa);
         parametros(this.secRotate);
-        this.dominios = verifyDomain(this.X0, this.d, this.h);
+        this.dominios = verifyDomain(X0, this.d, this.h);
         deformacaoBarra(this.dominios, this.secRotate.getBars(), X0, this.d, this.h);
         this.secACC = ACC(this.secRotate, this.yMax, X0);
         unrotate(this.secACC, alfa);
@@ -52,23 +54,38 @@ public class LinhaNeutra {
         return result;
     }
 
-  
+    // quero testar o valor retornado pela funcao comecar, cajo seja 0 o valor colocado como parametro X0 é o valor correto para
+    // profundidade da LN. caso contrário deve gerar um novo intervalo e um novo chute, ate que satisfaça a condiçao
+    // valor da funçao encontrada no metodo capacidadeResistente;
+    public void bissecant(float a, float b, float angulo) {
+        float c;
+        if ((comecar(a, angulo)) * (comecar(b, angulo)) <= 0) {
+            c = a;
+            while (Math.abs((b - a)) >= 0.01) {
+                c = (a + b) / 2;
+                if (Math.abs(comecar(c, angulo)) <= 0.001) {
+                    break;
+                } else if (comecar(c, angulo) * comecar(a, angulo) < 0) {
+                    b = c;
+                } else {
+                    a = c;
+                }
+
+            }
+            System.out.println("LN: " + c);
+
+        }
+    }
+
+    // pego o valor do esforço solicitante de calculo "2º botao" e faço a subtração da Normal de calculo resistente, encontrada no metodo
+    //EquilibrioEquaçoes 
 
     private float capacidadeResistente(secaoTransversal secTensao, float Acc, Esforcos momentosR) {
-        float tensoes = 0f;
-        float areaB;
+
         float fxs;
-        for (int i = 0; i < secTensao.getBars().getBarras().size(); i++) {
-            areaB = (secTensao.getBars().getBarras().get(i).getArea()) / 100;
-            tensoes += areaB * (secTensao.getBars().getBarras().get(i).getTensaoBarra());
-            System.out.println("");
-            System.out.println("area B: " + areaB);
-            System.out.println("");
-            System.out.println("Forca: " + tensoes);
-        }
-        System.out.println("acc: " + Acc);
-        System.out.println("SigmaCD: " + this.materiais.getConcrete().getSigmacd() / 10);
-        fxs = (momentosR.getNk()) - Acc * (this.materiais.getConcrete().getSigmacd() / 10) - tensoes;
+        // esforço solicitante de calculo - esforco resistente de calculo
+        fxs = (this.esforcosRecebidos.getNk() - this.momentosResistentes.getNk());
+
         System.out.println("Fx: " + fxs);
         return fxs;
     }
@@ -203,7 +220,7 @@ public class LinhaNeutra {
                     esi = (this.materiais.getConcrete().getDeformacaoE0() * ((x0 - bar.getBarras().get(i).getDi()) / (x0 - this.materiais.getConcrete().getK() * H))) / 1000;
                 }
             }
-            bar.getBarras().get(i).setDefbarra(((-1) * esi));
+            bar.getBarras().get(i).setDefbarra(((1) * esi));
             System.out.println(" ");
             System.out.println("deformaçao Esi: " + esi);
             bar.getBarras().get(i).setTensao(this.materiais.getAco().getEcs());

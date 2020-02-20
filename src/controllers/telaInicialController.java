@@ -142,15 +142,21 @@ public class telaInicialController {
     }
 
     private void metodoIterativo() {
-
+        //  testando classe- irei or em uma view
         LinhaNeutra Ln = new LinhaNeutra(this.secaoTransversal, this.materiais, this.esforcosCalculo);
-        
-
-        
-
-                
-                
-
+        float x1 = 0;
+        float fx1 = Ln.comecar(x1, -45);
+        // apenas um teste
+        while(Math.abs(fx1) >= (float) 0.001){
+            x1 = (float) (x1 + 0.01);
+            LinhaNeutra Ln2 = new LinhaNeutra(this.secaoTransversal, this.materiais, this.esforcosCalculo);
+            fx1 = Ln2.comecar(x1, -45);
+            if(x1 >= 2000){
+            break;
+            }
+            
+            
+        }System.out.println("X1: "+ x1);
     }
 
     /**
