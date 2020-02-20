@@ -36,7 +36,6 @@ public class LinhaNeutra {
     }
 
     // me retorna o valor  da equação 4.6.1 livro verde araujo
-
     public float comecar(float X0, float alfa) {
         float result;
         this.X0 = X0;
@@ -79,7 +78,6 @@ public class LinhaNeutra {
 
     // pego o valor do esforço solicitante de calculo "2º botao" e faço a subtração da Normal de calculo resistente, encontrada no metodo
     //EquilibrioEquaçoes 
-
     private float capacidadeResistente(secaoTransversal secTensao, float Acc, Esforcos momentosR) {
 
         float fxs;
