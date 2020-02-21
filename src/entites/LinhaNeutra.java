@@ -13,6 +13,7 @@ import java.util.List;
  * @author Administrador
  */
 public class LinhaNeutra {
+
     private float X0;
     float alfa;
     float Sx, Sy;
@@ -41,7 +42,7 @@ public class LinhaNeutra {
     public Esforcos momentos(float X0, float alfa) {
         dominiosDeformacao domi;
         secaoTransversal secTrans, secRotacionada, secUnrotacionada, secAConc;
-        float  altura, alturaU, sy, sx, Yc, ymax;
+        float altura, alturaU, sy, sx, Yc, ymax;
         Esforcos esforcosResistentes;
         secTrans = Translate(this.secaoRecebida);
         secRotacionada = Rotate(secTrans, alfa);
@@ -57,6 +58,44 @@ public class LinhaNeutra {
         sy = staticsMomentos(secUnrotacionada).getY();
         esforcosResistentes = EquilibrioEquacoes(secUnrotacionada.getArea(), secRotacionada, secTrans, this.materiais, sx, sy);
         return esforcosResistentes;
+    }
+
+    private float setAlfaProx(float alfini, float tetaD, float tetaR) {
+        float alfaProx = 0f;
+        if (tetaR > tetaD) {
+            alfaProx = (alfini + 90) * ((tetaD / tetaR)) - 90;
+        } else if (tetaR < tetaD) {
+
+            alfaProx = ((90 - tetaD)/(90 - tetaR))*alfini;
+        }
+
+        return alfaProx;
+    }
+
+    public float inclinacaoLN(float x0, float alfa) {
+        int cont =0;
+        Esforcos momentosResi;
+        float alfaIn = alfa;
+        momentosResi = momentos(x0,alfaIn);
+        float tetaD = (float) this.esforcosRecebidos.getTetaD();
+        float tetaR = (float) momentosResi.getTetaD();
+        float alfaPr;
+        while (Math.abs((tetaR - tetaD)) > (float) 0.001 ){
+            alfaPr = setAlfaProx(alfaIn,tetaD ,tetaR);
+            momentosResi = momentos(x0,alfaPr);
+            tetaR = (float) momentosResi.getTetaD();
+            alfaIn = alfaPr;
+            System.out.println("");
+            System.out.println("tentativa: "+ cont);
+            System.out.println("inclinaçao avaliada: "+ alfaPr);
+            System.out.println("");
+            cont++;
+        }
+        System.out.println("");
+        System.out.println("a inclinação correta é: "+ alfaIn);
+        System.out.println("Numero de interações: "+ cont);
+        System.out.println("");
+        return alfaIn;
     }
 
     public float comecar(float X0, float alfa) {
@@ -98,7 +137,14 @@ public class LinhaNeutra {
             while ((fb * fa > 0)) {
                 a1 = b1;
                 b1 = b1 * 10;
+
+                if(fb * fa <=0){
+                break;
+                
+                }
+                
             }
+            System.out.println("solucao esta entre " + a1 + " e " + b1);
         }
 
         float c, fc;
@@ -128,21 +174,21 @@ public class LinhaNeutra {
 
     public List<Esforcos> paresMomentos(float LN, float alfa1, float alfaFim) {
         List<Esforcos> mom = new ArrayList<>();
-        float acrescimo = (float) 0.1;
-        while(alfa1 <= alfaFim){
+        float acrescimo = (float) 1;
+        while (alfa1 <= alfaFim) {
             Esforcos m;
-            m = momentos(LN,alfa1);
+            m = momentos(LN, alfa1);
             mom.add(m);
             alfa1 = alfa1 + acrescimo;
             System.out.println("");
-            System.out.println("proximo angulo: "+ alfa1);
-            
+            System.out.println("proximo angulo: " + alfa1);
+
         }
-        for(int i = 0; i < mom.size(); i++){
+        for (int i = 0; i < mom.size(); i++) {
             System.out.println("");
-            System.out.println("Mxr: "+ mom.get(i).getMxk());
-            System.out.println("Myr: "+ mom.get(i).getMyk());
-            
+            System.out.println("Mxr: " + mom.get(i).getMxk());
+            System.out.println("Myr: " + mom.get(i).getMyk());
+
         }
 
         return mom;
@@ -154,7 +200,7 @@ public class LinhaNeutra {
 
         float fxs;
         // esforço solicitante de calculo - esforco resistente de calculo
-        fxs = (this.esforcosRecebidos.getNk() - momentosR.getNk());
+        fxs = (-this.esforcosRecebidos.getNk() - momentosR.getNk());
 
         System.out.println("Fx: " + fxs);
         return fxs;
@@ -294,7 +340,7 @@ public class LinhaNeutra {
                     esi = (this.materiais.getConcrete().getDeformacaoE0() * ((x0 - bar.getBarras().get(i).getDi()) / (x0 - this.materiais.getConcrete().getK() * H))) / 1000;
                 }
             }
-            esi = esi * (-1);
+            esi = esi * (1);
             bar.getBarras().get(i).setDefbarra((esi));
             bar.getBarras().get(i).setTensao(this.materiais.getAco().getEcs());
             System.out.println(" ");

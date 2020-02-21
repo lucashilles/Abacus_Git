@@ -146,8 +146,10 @@ public class telaInicialController {
         LinhaNeutra Ln = new LinhaNeutra(this.secaoTransversal, this.materiais, this.esforcosCalculo);
         Ln.bissecant(0, 1000, (float) (this.esforcosCalculo.getTetaD() - 90));
         if (Ln.getX0() != 0) {
-            Ln.paresMomentos(Ln.getX0(), 0, 360);
+            Ln.inclinacaoLN(Ln.getX0(), (float) (this.esforcosCalculo.getTetaD() - 90));
+            //Ln.paresMomentos(Ln.getX0(), 0, 360);
         }
+
     }
 
     /**

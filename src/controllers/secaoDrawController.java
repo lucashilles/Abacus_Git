@@ -32,11 +32,11 @@ import views.secaoDraw;
 public class secaoDrawController {
 
     private Barras bars = new Barras();
-    private areaDesenho draw;
+    private areaDesenho draw =null;
     private secaoTransversal sec = new secaoTransversal();
-    private secaoDraw secView;
+    private secaoDraw secView = null;
     private JDialog frame; //Alterado para JDialog para fazer o controle por modais
-    private JFrame parent;
+    private JFrame parent= null;
     private secaoTransversal secEnviar;
 
     public secaoDrawController(JFrame parent) {
@@ -272,7 +272,7 @@ public class secaoDrawController {
     }
 
     private void createSection() {
-        if (sec.getVertices().size() > 2 && bars.getBarras().size() > 2) {
+        if (sec.getVertices().size() > 2 && bars.getBarras().size() > 2 && sec.getArea() >= 360) {
             if (JOptionPane.showConfirmDialog(frame, "Deseja criar a seção?") == JOptionPane.OK_OPTION) {
                 secEnviar = new secaoTransversal(getSec(), getBars());
                 JOptionPane.showMessageDialog(frame, "Seção criada!");
@@ -281,7 +281,8 @@ public class secaoDrawController {
             }
 
         } else {
-            JOptionPane.showMessageDialog(frame, "Seção inválida! Verifique a quantidade de vértices e barras", "Erro", JOptionPane.ERROR_MESSAGE);
+           
+            JOptionPane.showMessageDialog(frame, "Seção inválida! Verifique a quantidade de vértices e barras e a area da seção", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
