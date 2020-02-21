@@ -6,14 +6,14 @@
 package entites;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Administrador
  */
 public class LinhaNeutra {
-
-    float X0;
+    private float X0;
     float alfa;
     float Sx, Sy;
     private float fx;
@@ -38,6 +38,27 @@ public class LinhaNeutra {
     }
 
     // me retorna o valor  da equação 4.6.1 livro verde araujo
+    public Esforcos momentos(float X0, float alfa) {
+        dominiosDeformacao domi;
+        secaoTransversal secTrans, secRotacionada, secUnrotacionada, secAConc;
+        float  altura, alturaU, sy, sx, Yc, ymax;
+        Esforcos esforcosResistentes;
+        secTrans = Translate(this.secaoRecebida);
+        secRotacionada = Rotate(secTrans, alfa);
+        altura = parametros(secRotacionada, X0).get(0);
+        alturaU = parametros(secRotacionada, X0).get(1);
+        Yc = parametros(secRotacionada, X0).get(3);
+        ymax = parametros(secRotacionada, X0).get(2);
+        domi = verifyDomain(X0, alturaU, altura);
+        deformacaoBarra(domi, secRotacionada.getBars(), X0, alturaU, altura);
+        secAConc = ACC(secRotacionada, ymax, X0, Yc);
+        secUnrotacionada = unrotate(secAConc, alfa);
+        sx = staticsMomentos(secUnrotacionada).getX();
+        sy = staticsMomentos(secUnrotacionada).getY();
+        esforcosResistentes = EquilibrioEquacoes(secUnrotacionada.getArea(), secRotacionada, secTrans, this.materiais, sx, sy);
+        return esforcosResistentes;
+    }
+
     public float comecar(float X0, float alfa) {
         dominiosDeformacao domi;
         secaoTransversal secTrans, secRotacionada, secUnrotacionada, secAConc;
@@ -65,6 +86,7 @@ public class LinhaNeutra {
     // profundidade da LN. caso contrário deve gerar um novo intervalo e um novo chute, ate que satisfaça a condiçao
     // valor da funçao encontrada no metodo capacidadeResistente;
     public void bissecant(float a, float b, float angulo) {
+        int contador = 0;
         float a1 = a;
         float b1 = b;
         float fa = comecar(a1, angulo);
@@ -81,22 +103,49 @@ public class LinhaNeutra {
 
         float c, fc;
         c = ((a1 * fb) - (b1 * fa)) / (fb - fa);
-        System.out.println("X Ln analisado: "+ c);
+        System.out.println("X Ln analisado: " + c);
         fc = comecar(c, angulo);
         while (Math.abs(fc) > (float) 0.001) {
             float produto = fa * fc;
             if (produto > 0) {
                 a1 = c;
                 fa = fc;
-                
+
             } else if (produto < 0) {
                 b1 = c;
                 fb = fc;
             }
             c = ((a1 * fb) - (b1 * fa)) / (fb - fa);
             fc = comecar(c, angulo);
+            System.out.println("X Ln analisado: " + c);
+            contador++;
         }
-        System.out.println("a LN é : " + c);
+        this.X0 = c;
+        System.out.println("a LN é : " + this.getX0());
+        System.out.println("");
+        System.out.println("Numero de interações: " + contador);
+    }
+
+    public List<Esforcos> paresMomentos(float LN, float alfa1, float alfaFim) {
+        List<Esforcos> mom = new ArrayList<>();
+        float acrescimo = (float) 0.1;
+        while(alfa1 <= alfaFim){
+            Esforcos m;
+            m = momentos(LN,alfa1);
+            mom.add(m);
+            alfa1 = alfa1 + acrescimo;
+            System.out.println("");
+            System.out.println("proximo angulo: "+ alfa1);
+            
+        }
+        for(int i = 0; i < mom.size(); i++){
+            System.out.println("");
+            System.out.println("Mxr: "+ mom.get(i).getMxk());
+            System.out.println("Myr: "+ mom.get(i).getMyk());
+            
+        }
+
+        return mom;
     }
 
     // pego o valor do esforço solicitante de calculo "2º botao" e faço a subtração da Normal de calculo resistente, encontrada no metodo
@@ -375,6 +424,13 @@ public class LinhaNeutra {
      */
     public float getFx() {
         return fx;
+    }
+
+    /**
+     * @return the X0
+     */
+    public float getX0() {
+        return X0;
     }
 
 }
