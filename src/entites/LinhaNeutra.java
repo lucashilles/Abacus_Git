@@ -5,6 +5,8 @@
  */
 package entites;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Administrador
@@ -37,19 +39,25 @@ public class LinhaNeutra {
 
     // me retorna o valor  da equação 4.6.1 livro verde araujo
     public float comecar(float X0, float alfa) {
-        float result;
-        this.X0 = X0;
-        this.alfa = alfa;
-        Translate(this.secaoRecebida);
-        Rotate(this.secTransladada, alfa);
-        parametros(this.secRotate);
-        this.dominios = verifyDomain(X0, this.d, this.h);
-        deformacaoBarra(this.dominios, this.secRotate.getBars(), X0, this.d, this.h);
-        this.secACC = ACC(this.secRotate, this.yMax, X0);
-        unrotate(this.secACC, alfa);
-        staticsMomentos(this.secUnRotate);
-        this.momentosResistentes = EquilibrioEquacoes(this.acc, this.secRotate, this.secTransladada, this.materiais, this.Sx, this.Sy);
-        result = capacidadeResistente(this.secRotate, this.acc, this.momentosResistentes);
+        dominiosDeformacao domi;
+        secaoTransversal secTrans, secRotacionada, secUnrotacionada, secAConc;
+        float result, altura, alturaU, sy, sx, accL, Yc, ymax;
+        Esforcos esforcosResistentes;
+        secTrans = Translate(this.secaoRecebida);
+        secRotacionada = Rotate(secTrans, alfa);
+        altura = parametros(secRotacionada, X0).get(0);
+        alturaU = parametros(secRotacionada, X0).get(1);
+        Yc = parametros(secRotacionada, X0).get(3);
+        ymax = parametros(secRotacionada, X0).get(2);
+        domi = verifyDomain(X0, alturaU, altura);
+        deformacaoBarra(domi, secRotacionada.getBars(), X0, alturaU, altura);
+        secAConc = ACC(secRotacionada, ymax, X0, Yc);
+        secUnrotacionada = unrotate(secAConc, alfa);
+        sx = staticsMomentos(secUnrotacionada).getX();
+        sy = staticsMomentos(secUnrotacionada).getY();
+        esforcosResistentes = EquilibrioEquacoes(secUnrotacionada.getArea(), secRotacionada, secTrans, this.materiais, sx, sy);
+
+        result = capacidadeResistente(secRotacionada, secUnrotacionada.getArea(), esforcosResistentes);
         return result;
     }
 
@@ -57,23 +65,38 @@ public class LinhaNeutra {
     // profundidade da LN. caso contrário deve gerar um novo intervalo e um novo chute, ate que satisfaça a condiçao
     // valor da funçao encontrada no metodo capacidadeResistente;
     public void bissecant(float a, float b, float angulo) {
-        float c;
-        if ((comecar(a, angulo)) * (comecar(b, angulo)) <= 0) {
-            c = a;
-            while (Math.abs((b - a)) >= 0.01) {
-                c = (a + b) / 2;
-                if (Math.abs(comecar(c, angulo)) <= 0.001) {
-                    break;
-                } else if (comecar(c, angulo) * comecar(a, angulo) < 0) {
-                    b = c;
-                } else {
-                    a = c;
-                }
+        float a1 = a;
+        float b1 = b;
+        float fa = comecar(a1, angulo);
+        float fb = comecar(b1, angulo);
+        if (fb * fa <= 0) {
+            System.out.println("solucao esta entre " + a1 + " e " + b1);
 
+        } else {
+            while ((fb * fa > 0)) {
+                a1 = b1;
+                b1 = b1 * 10;
             }
-            System.out.println("LN: " + c);
-
         }
+
+        float c, fc;
+        c = ((a1 * fb) - (b1 * fa)) / (fb - fa);
+        System.out.println("X Ln analisado: "+ c);
+        fc = comecar(c, angulo);
+        while (Math.abs(fc) > (float) 0.001) {
+            float produto = fa * fc;
+            if (produto > 0) {
+                a1 = c;
+                fa = fc;
+                
+            } else if (produto < 0) {
+                b1 = c;
+                fb = fc;
+            }
+            c = ((a1 * fb) - (b1 * fa)) / (fb - fa);
+            fc = comecar(c, angulo);
+        }
+        System.out.println("a LN é : " + c);
     }
 
     // pego o valor do esforço solicitante de calculo "2º botao" e faço a subtração da Normal de calculo resistente, encontrada no metodo
@@ -82,7 +105,7 @@ public class LinhaNeutra {
 
         float fxs;
         // esforço solicitante de calculo - esforco resistente de calculo
-        fxs = (this.esforcosRecebidos.getNk() - this.momentosResistentes.getNk());
+        fxs = (this.esforcosRecebidos.getNk() - momentosR.getNk());
 
         System.out.println("Fx: " + fxs);
         return fxs;
@@ -110,6 +133,7 @@ public class LinhaNeutra {
             Mydr += (sY) * (conc.getConcrete().getSigmacd() / 10) + areabarra * tensaoBarra * ysi;
 
         }
+        //kN/m
         Mxdr = Mxdr / 100;
         Mydr = Mydr / 100;
         Ers = new Esforcos(Mxdr, Mydr, Ndr);
@@ -119,8 +143,9 @@ public class LinhaNeutra {
         return Ers;
     }
 
-    private void staticsMomentos(secaoTransversal s) {
+    private Vertice staticsMomentos(secaoTransversal s) {
         float sx = 0f, sy = 0f;
+        Vertice momentosstaticos;
 
         for (int i = 0; i < s.getVertices().size(); i++) {
             Vertice a, b;
@@ -141,15 +166,17 @@ public class LinhaNeutra {
         }
         sx = sx / 6;
         sy = sy / -6;
-        this.Sx = sx;
-        this.Sy = sy;
+        momentosstaticos = new Vertice(sx, sy);
+        //this.Sx = sx;
+        //this.Sy = sy;
 
-        System.out.println("Sx: " + Sx);
-        System.out.println("Sy: " + Sy);
+        System.out.println("Sx: " + momentosstaticos.getX());
+        System.out.println("Sy: " + momentosstaticos.getY());
+        return momentosstaticos;
 
     }
 
-    public void unrotate(secaoTransversal s, float angulo) {
+    public secaoTransversal unrotate(secaoTransversal s, float angulo) {
         secaoTransversal sec = new secaoTransversal();
 
         for (Vertice v : s.getVertices()) {
@@ -164,11 +191,11 @@ public class LinhaNeutra {
         }
 
         System.out.println("Area ver: " + sec.getArea());
-        this.secUnRotate = sec;
+        return sec;
 
     }
 
-    public secaoTransversal ACC(secaoTransversal sec, float ymax, float x0) {
+    public secaoTransversal ACC(secaoTransversal sec, float ymax, float x0, float yc) {
         secaoTransversal secT = new secaoTransversal();
         float deltaX, deltaY;
 
@@ -184,12 +211,12 @@ public class LinhaNeutra {
             deltaX = b.getX() - a.getX();
             deltaY = b.getY() - a.getY();
             if (deltaY != 0) {
-                float xLinha = a.getX() + (this.gamac - a.getY()) * (deltaX / deltaY);
-                Vertice Inter = new Vertice(xLinha, this.gamac);
-                if (a.getY() >= this.gamac) {
+                float xLinha = a.getX() + (yc - a.getY()) * (deltaX / deltaY);
+                Vertice Inter = new Vertice(xLinha, yc);
+                if (a.getY() >= yc) {
                     secT.addVertice(a);
                 }
-                if (Inter.getY() >= this.gamac) {
+                if (Inter.getY() >= yc) {
                     secT.addVertice(Inter);
 
                 }
@@ -218,10 +245,11 @@ public class LinhaNeutra {
                     esi = (this.materiais.getConcrete().getDeformacaoE0() * ((x0 - bar.getBarras().get(i).getDi()) / (x0 - this.materiais.getConcrete().getK() * H))) / 1000;
                 }
             }
-            bar.getBarras().get(i).setDefbarra(((1) * esi));
+            esi = esi * (-1);
+            bar.getBarras().get(i).setDefbarra((esi));
+            bar.getBarras().get(i).setTensao(this.materiais.getAco().getEcs());
             System.out.println(" ");
             System.out.println("deformaçao Esi: " + esi);
-            bar.getBarras().get(i).setTensao(this.materiais.getAco().getEcs());
             System.out.println("tensao: " + bar.getBarras().get(i).getTensaoBarra());
 
         }
@@ -246,8 +274,9 @@ public class LinhaNeutra {
         return dom;
     }
 
-    private void parametros(secaoTransversal secRot) {
-        float ht, dt, ymax, ymin;
+    private ArrayList<Float> parametros(secaoTransversal secRot, float x0) {
+        ArrayList<Float> parametros = new ArrayList<>();
+        float ht, dt, ymax, ymin, gamaC;
         ymax = 0;
         ymin = 0;
         for (Vertice v : secRot.getVertices()) {
@@ -259,7 +288,9 @@ public class LinhaNeutra {
             }
         }
         ht = ymax - ymin;
-        this.h = ht;
+        // altura peça em relaçao ao angulo alfa
+        parametros.add(0, ht);
+        //this.h = ht;
 
         for (int j = 0; j < secRot.getBars().getBarras().size(); j++) {
             float ys = secRot.getBars().getBarras().get(j).getY();
@@ -272,13 +303,22 @@ public class LinhaNeutra {
             }
         }
         dt = da;
-        this.d = dt;
-        this.yMax = ymax;
-        this.gamac = this.yMax - this.materiais.getConcrete().getLambda() * this.X0;
-        System.out.println("Yc = " + this.gamac + ", h= " + this.h + " , d = " + this.d);
+        //altura util
+        parametros.add(1, dt);
+        //this.d = dt;
+        //Ymax
+        parametros.add(2, ymax);
+        //this.yMax = ymax;
+        //YC
+        gamaC = ymax - this.materiais.getConcrete().getLambda() * x0;
+        parametros.add(3, gamaC);
+        //x0
+        parametros.add(4, x0);
+        System.out.println("Yc = " + parametros.get(3) + ", h= " + parametros.get(0) + " , d = " + parametros.get(1));
+        return parametros;
     }
 
-    private void Rotate(secaoTransversal sec, float angulo) {
+    private secaoTransversal Rotate(secaoTransversal sec, float angulo) {
         secaoTransversal section = new secaoTransversal();
         secaoTransversal sec2;
         Barras bars = new Barras();
@@ -297,7 +337,7 @@ public class LinhaNeutra {
 
         }
         sec2 = new secaoTransversal(section, bars);
-        this.secRotate = sec2;
+        //this.secRotate = sec2;
 
         for (Vertice v : sec2.getVertices()) {
             System.out.println("VR: " + v.getX() + "; " + v.getY());
@@ -305,10 +345,10 @@ public class LinhaNeutra {
         for (barra b : sec2.getBars().getBarras()) {
             System.out.println("BR: " + b.getX() + "; " + b.getY() + " dia: " + b.getDiametro());
         }
-
+        return sec2;
     }
 
-    private void Translate(secaoTransversal sec) {
+    private secaoTransversal Translate(secaoTransversal sec) {
         secaoTransversal section = new secaoTransversal();
         secaoTransversal sec2;
         Barras bars = new Barras();
@@ -324,10 +364,10 @@ public class LinhaNeutra {
         }
         sec2 = new secaoTransversal(section, bars);
 
-        this.secTransladada = sec2;
-        System.out.println("Area transladaded: " + secTransladada.getArea());
-        System.out.println("Area barras total: " + secTransladada.getBars().getAreaBars());
-
+        //this.secTransladada = sec2;
+        System.out.println("Area transladaded: " + sec2.getArea());
+        System.out.println("Area barras total: " + sec2.getBars().getAreaBars());
+        return sec2;
     }
 
     /**

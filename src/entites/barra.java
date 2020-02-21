@@ -24,9 +24,9 @@ public class barra {
         this.y = y;
 
     }
-    //MPascal
+    
     public void setTensao( float ECS){
-        this.tensaoBarra = (this.defbarra)*(ECS/10);//kN/cm²
+        this.tensaoBarra = ((this.defbarra)*(ECS/10));//kN/cm²
     }
     private void areaBar(){
         float aux;
