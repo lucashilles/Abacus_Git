@@ -66,34 +66,34 @@ public class LinhaNeutra {
             alfaProx = (alfini + 90) * ((tetaD / tetaR)) - 90;
         } else if (tetaR < tetaD) {
 
-            alfaProx = ((90 - tetaD)/(90 - tetaR))*alfini;
+            alfaProx = ((90 - tetaD) / (90 - tetaR)) * alfini;
         }
 
         return alfaProx;
     }
 
     public float inclinacaoLN(float x0, float alfa) {
-        int cont =0;
+        int cont = 0;
         Esforcos momentosResi;
         float alfaIn = alfa;
-        momentosResi = momentos(x0,alfaIn);
+        momentosResi = momentos(x0, alfaIn);
         float tetaD = (float) this.esforcosRecebidos.getTetaD();
         float tetaR = (float) momentosResi.getTetaD();
         float alfaPr;
-        while (Math.abs((tetaR - tetaD)) > (float) 0.001 ){
-            alfaPr = setAlfaProx(alfaIn,tetaD ,tetaR);
-            momentosResi = momentos(x0,alfaPr);
+        while (Math.abs((tetaR - tetaD)) > (float) 0.001) {
+            alfaPr = setAlfaProx(alfaIn, tetaD, tetaR);
+            momentosResi = momentos(x0, alfaPr);
             tetaR = (float) momentosResi.getTetaD();
             alfaIn = alfaPr;
             System.out.println("");
-            System.out.println("tentativa: "+ cont);
-            System.out.println("inclinaçao avaliada: "+ alfaPr);
+            System.out.println("tentativa: " + cont);
+            System.out.println("inclinaçao avaliada: " + alfaPr);
             System.out.println("");
             cont++;
         }
         System.out.println("");
-        System.out.println("a inclinação correta é: "+ alfaIn);
-        System.out.println("Numero de interações: "+ cont);
+        System.out.println("a inclinação correta é: " + alfaIn);
+        System.out.println("Numero de interações: " + cont);
         System.out.println("");
         return alfaIn;
     }
@@ -138,11 +138,11 @@ public class LinhaNeutra {
                 a1 = b1;
                 b1 = b1 * 10;
 
-                if(fb * fa <=0){
-                break;
-                
+                if (fb * fa <= 0) {
+                    break;
+
                 }
-                
+
             }
             System.out.println("solucao esta entre " + a1 + " e " + b1);
         }
@@ -308,14 +308,20 @@ public class LinhaNeutra {
             if (deltaY != 0) {
                 float xLinha = a.getX() + (yc - a.getY()) * (deltaX / deltaY);
                 Vertice Inter = new Vertice(xLinha, yc);
-                if (a.getY() >= yc) {
-                    secT.addVertice(a);
-                }
+
                 if (Inter.getY() >= yc) {
                     secT.addVertice(Inter);
 
                 }
-                System.out.println("faz intercepto");
+                if (b.getY() >= yc) {
+                    secT.addVertice(b);
+                }
+                System.out.println("lado " + (i + 1) + " faz intercepto");
+            } else {
+                System.out.println("lado" + (i + 1) + " Nao faz intercepto");
+                if(b.getY() >= yc){
+                    secT.addVertice(b);
+                }
             }
 
         }
