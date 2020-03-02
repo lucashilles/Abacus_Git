@@ -17,7 +17,7 @@ public class abacus {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new mainFrameController();
+        mainFrameController mainFrameController = new mainFrameController();
     }
     
 }

@@ -10,7 +10,8 @@ package entites;
  * @author Administrador
  */
 public class barra {
-    private float di = 0f;
+
+    private float di;
     private float diametro = 0f;
     private float x, y;
     private float area = 0f;
@@ -24,15 +25,18 @@ public class barra {
         this.y = y;
 
     }
-    
-    public void setTensao( float ECS){
-        this.tensaoBarra = ((this.defbarra)*(ECS/10));//kN/cm²
+
+    public void setTensao(float tensao) {
+            this.tensaoBarra = tensao;
+           
+       
     }
-    private void areaBar(){
+
+    private void areaBar() {
         float aux;
-        aux = (float) (Math.pow((diametro / 2),2)*Math.PI);
+        aux = (float) (Math.pow((diametro / 2), 2) * Math.PI);
         this.area = aux;
-        System.out.println("AREA: "+ this.getArea());
+        System.out.println("AREA: " + this.getArea());
     }
 
     /**

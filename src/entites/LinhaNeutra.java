@@ -15,7 +15,7 @@ import java.util.List;
 public class LinhaNeutra {
 
     private float X0;
-    float alfa;
+    private float alfa;
     float Sx, Sy;
     private float fx;
 
@@ -39,7 +39,7 @@ public class LinhaNeutra {
     }
 
     // me retorna o valor  da equação 4.6.1 livro verde araujo
-    public Esforcos momentos(float X0, float alfa) {
+    public Esforcos momentos(float X0, float alfa, float atb) {
         dominiosDeformacao domi;
         secaoTransversal secTrans, secRotacionada, secUnrotacionada, secAConc;
         float altura, alturaU, sy, sx, Yc, ymax;
@@ -56,14 +56,65 @@ public class LinhaNeutra {
         secUnrotacionada = unrotate(secAConc, alfa);
         sx = staticsMomentos(secUnrotacionada).getX();
         sy = staticsMomentos(secUnrotacionada).getY();
-        esforcosResistentes = EquilibrioEquacoes(secUnrotacionada.getArea(), secRotacionada, secTrans, this.materiais, sx, sy);
+        esforcosResistentes = EquilibrioEquacoes(secUnrotacionada.getArea(), atb, secRotacionada, secTrans, this.materiais, sx, sy);
         return esforcosResistentes;
+    }
+
+    public float verifyAco(float MdResistente, float MdSolicitante) {
+        float epslon;
+        epslon = ((MdResistente - MdSolicitante) / (MdSolicitante));
+        return epslon;
+    }
+
+    public float areaAco(float As0, float Asu, float X0, float alfa) {
+        float Mds, Mdr0, Mdru;
+        float ep0, epU;
+        float A0, Au;
+        A0 = As0;
+        Au = Asu;
+        Mdr0 = momentos(X0, alfa, A0).getMd();
+        Mdru = momentos(X0, alfa, Au).getMd();
+        Mds = this.esforcosRecebidos.getMd();
+        ep0 = verifyAco(Mdr0, Mds);
+        epU = verifyAco(Mdru, Mds);
+        while (ep0 < 0 && epU < 0) {
+            if (ep0 < 0) {
+                A0 = (float) (A0 * 1.1);
+                Mdr0 = momentos(X0, alfa, (A0)).getMd();
+                ep0 = verifyAco(Mdr0, Mds);
+            }
+            if (epU < 0) {
+                Au = (float) (Au * 1.1);
+                Mdru = momentos(X0, alfa, (Au)).getMd();
+                epU = verifyAco(Mdru, Mds);
+            }
+        }
+        System.out.println(" ");
+        System.out.println("A area de aço encontra-se entre: " + A0 + " e " + Au);
+        float AsR = ((A0 * Mdru) - (Au * Mdr0)) / (Mdru - Mdr0);
+        float fAsR = momentos(X0, alfa, AsR).getMd();
+        while (Math.abs(fAsR - this.esforcosRecebidos.getMd()) > (float) 0.001) {
+            float produto = Mdr0 * momentos(X0, alfa, AsR).getMd();
+            if (produto > 0) {
+                Au = AsR;
+                Mdru = fAsR;
+            } else if (produto < 0) {
+                A0 = AsR;
+                Mdr0 = fAsR;
+            }
+            AsR = ((A0 * Mdru) - (Au * Mdr0)) / (Mdru - Mdr0);
+            fAsR = momentos(X0, alfa, AsR).getMd();
+
+        }
+        System.out.println(" ");
+        System.out.println(" Area de aço ideal: " + AsR);
+        return 0;
     }
 
     private float setAlfaProx(float alfini, float tetaD, float tetaR) {
         float alfaProx = 0f;
         if (tetaR > tetaD) {
-            alfaProx = (alfini + 90) * ((tetaD / tetaR)) - 90;
+            alfaProx = ((alfini + 90) * ((tetaD / tetaR))) - 90;
         } else if (tetaR < tetaD) {
 
             alfaProx = ((90 - tetaD) / (90 - tetaR)) * alfini;
@@ -72,17 +123,17 @@ public class LinhaNeutra {
         return alfaProx;
     }
 
-    public float inclinacaoLN(float x0, float alfa) {
+    public float inclinacaoLN(float x0, float alfa, float atb) {
         int cont = 0;
         Esforcos momentosResi;
         float alfaIn = alfa;
-        momentosResi = momentos(x0, alfaIn);
+        momentosResi = momentos(x0, alfaIn, atb);
         float tetaD = (float) this.esforcosRecebidos.getTetaD();
         float tetaR = (float) momentosResi.getTetaD();
         float alfaPr;
         while (Math.abs((tetaR - tetaD)) > (float) 0.001) {
             alfaPr = setAlfaProx(alfaIn, tetaD, tetaR);
-            momentosResi = momentos(x0, alfaPr);
+            momentosResi = momentos(x0, alfaPr, atb);
             tetaR = (float) momentosResi.getTetaD();
             alfaIn = alfaPr;
             System.out.println("");
@@ -95,10 +146,12 @@ public class LinhaNeutra {
         System.out.println("a inclinação correta é: " + alfaIn);
         System.out.println("Numero de interações: " + cont);
         System.out.println("");
+        this.alfa = alfaIn;
+
         return alfaIn;
     }
 
-    public float comecar(float X0, float alfa) {
+    public float comecar(float X0, float alfa, float atb) {
         dominiosDeformacao domi;
         secaoTransversal secTrans, secRotacionada, secUnrotacionada, secAConc;
         float result, altura, alturaU, sy, sx, accL, Yc, ymax;
@@ -115,21 +168,21 @@ public class LinhaNeutra {
         secUnrotacionada = unrotate(secAConc, alfa);
         sx = staticsMomentos(secUnrotacionada).getX();
         sy = staticsMomentos(secUnrotacionada).getY();
-        esforcosResistentes = EquilibrioEquacoes(secUnrotacionada.getArea(), secRotacionada, secTrans, this.materiais, sx, sy);
+        esforcosResistentes = EquilibrioEquacoes(secUnrotacionada.getArea(), atb, secRotacionada, secTrans, this.materiais, sx, sy);
 
-        result = capacidadeResistente(secRotacionada, secUnrotacionada.getArea(), esforcosResistentes);
+        result = capacidadeResistente(secRotacionada, secUnrotacionada.getArea(), esforcosResistentes, this.materiais);
         return result;
     }
 
     // quero testar o valor retornado pela funcao comecar, cajo seja 0 o valor colocado como parametro X0 é o valor correto para
     // profundidade da LN. caso contrário deve gerar um novo intervalo e um novo chute, ate que satisfaça a condiçao
     // valor da funçao encontrada no metodo capacidadeResistente;
-    public void bissecant(float a, float b, float angulo) {
+    public void bissecant(float a, float b, float angulo, float atb) {
         int contador = 0;
         float a1 = a;
         float b1 = b;
-        float fa = comecar(a1, angulo);
-        float fb = comecar(b1, angulo);
+        float fa = comecar(a1, angulo, atb);
+        float fb = comecar(b1, angulo, atb);
         if (fb * fa <= 0) {
             System.out.println("solucao esta entre " + a1 + " e " + b1);
 
@@ -150,7 +203,7 @@ public class LinhaNeutra {
         float c, fc;
         c = ((a1 * fb) - (b1 * fa)) / (fb - fa);
         System.out.println("X Ln analisado: " + c);
-        fc = comecar(c, angulo);
+        fc = comecar(c, angulo, atb);
         while (Math.abs(fc) > (float) 0.001) {
             float produto = fa * fc;
             if (produto > 0) {
@@ -162,7 +215,7 @@ public class LinhaNeutra {
                 fb = fc;
             }
             c = ((a1 * fb) - (b1 * fa)) / (fb - fa);
-            fc = comecar(c, angulo);
+            fc = comecar(c, angulo, atb);
             System.out.println("X Ln analisado: " + c);
             contador++;
         }
@@ -172,12 +225,12 @@ public class LinhaNeutra {
         System.out.println("Numero de interações: " + contador);
     }
 
-    public List<Esforcos> paresMomentos(float LN, float alfa1, float alfaFim) {
+    public List<Esforcos> paresMomentos(float LN, float alfa1, float alfaFim, float atb) {
         List<Esforcos> mom = new ArrayList<>();
-        float acrescimo = (float) 1;
+        float acrescimo = (float) 10;
         while (alfa1 <= alfaFim) {
             Esforcos m;
-            m = momentos(LN, alfa1);
+            m = momentos(LN, alfa1, atb);
             mom.add(m);
             alfa1 = alfa1 + acrescimo;
             System.out.println("");
@@ -196,38 +249,56 @@ public class LinhaNeutra {
 
     // pego o valor do esforço solicitante de calculo "2º botao" e faço a subtração da Normal de calculo resistente, encontrada no metodo
     //EquilibrioEquaçoes 
-    private float capacidadeResistente(secaoTransversal secTensao, float Acc, Esforcos momentosR) {
-
+    private float capacidadeResistente(secaoTransversal secTensao, float Acc, Esforcos momentosR, Materials concreto) {
+        //cm²
+        float areaCC = Acc;
         float fxs;
+        float Ndr = 0f;
+        float result;
+        Ndr = momentosR.getNk();
+        result = this.esforcosRecebidos.getNk() - Ndr;
+        System.out.println("Result: " + result);
         // esforço solicitante de calculo - esforco resistente de calculo
-        fxs = (-this.esforcosRecebidos.getNk() - momentosR.getNk());
-
+        fxs = result;
+        System.out.println("");
         System.out.println("Fx: " + fxs);
         return fxs;
     }
 
-    private Esforcos EquilibrioEquacoes(float Acc, secaoTransversal secTensao, secaoTransversal secTransladada, Materials conc, float sX, float sY) {
+    private Esforcos EquilibrioEquacoes(float Acc, float ATB, secaoTransversal secTensao, secaoTransversal secTransladada, Materials conc, float sX, float sY) {
         Esforcos Ers;
-        float Ndr = 0f;
-        float Mxdr = 0f;
-        float Mydr = 0f;
+        float somaTensao = 0f, somaMomentoX = 0f, somaMomentoY = 0f;
+        float Ndr;
+        float Mxdr;
+        float Mydr;
+        // cm²
+        float areaTotalB = ATB / 100;
+
+        System.out.println(" ");
+        System.out.println("area total de barras " + areaTotalB);
+
         for (int i = 0; i < secTensao.getBars().getBarras().size(); i++) {
-            // cm²
-            float areabarra = (float) ((secTensao.getBars().getBarras().get(i).getArea()) / 100);
+
             //kN/cm²
             float tensaoBarra = secTensao.getBars().getBarras().get(i).getTensaoBarra();
             //centimeters
             float xsi = (secTransladada.getBars().getBarras().get(i).getX());
             //centimeters
             float ysi = (secTransladada.getBars().getBarras().get(i).getY());
-            //kN
-            Ndr += (Acc) * (conc.getConcrete().getSigmacd() / 10) + areabarra * tensaoBarra;
+            //kN/cm²
+            somaTensao += tensaoBarra;
             //kN.cm
-            Mxdr += (sX) * (conc.getConcrete().getSigmacd() / 10) + areabarra * tensaoBarra * xsi;
-            //kN.cm
-            Mydr += (sY) * (conc.getConcrete().getSigmacd() / 10) + areabarra * tensaoBarra * ysi;
+            somaMomentoX += tensaoBarra * xsi;
+            //kN.cm²
+            somaMomentoY += tensaoBarra * ysi;
 
         }
+        // kN
+        Ndr = (Acc * (conc.getConcrete().getSigmacd() / 10)) + (areaTotalB / secTensao.getBars().getBarras().size()) * somaTensao;
+        //kN.cm
+        Mxdr = (sX * (conc.getConcrete().getSigmacd() / 10)) + (areaTotalB / secTensao.getBars().getBarras().size()) * somaMomentoX;
+        //kN.cm
+        Mydr = (sY * (conc.getConcrete().getSigmacd() / 10)) + (areaTotalB / secTensao.getBars().getBarras().size()) * somaMomentoY;
         //kN/m
         Mxdr = Mxdr / 100;
         Mydr = Mydr / 100;
@@ -254,16 +325,15 @@ public class LinhaNeutra {
             }
             deltax = b.getX() - a.getX();
             deltay = b.getY() - a.getY();
-            System.out.println("Dx: " + deltax + "& Dy: " + deltay);
+            System.out.println("Dx: " + deltax + " & Dy: " + deltay);
             sx += deltay * (3 * a.getX() * b.getX() + ((float) Math.pow(deltax, 2)));
             sy += deltax * (3 * a.getY() * b.getY() + ((float) Math.pow(deltay, 2)));
             System.out.println("sx parcial: " + sx);
         }
         sx = sx / 6;
-        sy = sy / -6;
+        sy = ((-1) * (sy / 6));
         momentosstaticos = new Vertice(sx, sy);
-        //this.Sx = sx;
-        //this.Sy = sy;
+
 
         System.out.println("Sx: " + momentosstaticos.getX());
         System.out.println("Sy: " + momentosstaticos.getY());
@@ -319,7 +389,7 @@ public class LinhaNeutra {
                 System.out.println("lado " + (i + 1) + " faz intercepto");
             } else {
                 System.out.println("lado" + (i + 1) + " Nao faz intercepto");
-                if(b.getY() >= yc){
+                if (b.getY() >= yc) {
                     secT.addVertice(b);
                 }
             }
@@ -334,21 +404,22 @@ public class LinhaNeutra {
         return secT;
     }
 
+
+
     private void deformacaoBarra(dominiosDeformacao dom, Barras bar, float x0, float dUtil, float H) {
         float esi;
         for (int i = 0; i < bar.getBarras().size(); i++) {
             if (dom.getDominiosDeformacao() == 0) {
-                esi = (10 * ((x0 - bar.getBarras().get(i).getDi()) / (dUtil - x0))) / 1000;
+                esi = ((10 / 1000) * ((x0 - bar.getBarras().get(i).getDi()) / (dUtil - x0)));
             } else {
                 if (dom.getDominiosDeformacao() == 1) {
-                    esi = (this.materiais.getConcrete().getDeformacaoEu() * ((x0 - bar.getBarras().get(i).getDi()) / x0)) / 1000;
+                    esi = ((this.materiais.getConcrete().getDeformacaoEu() / 1000) * ((x0 - bar.getBarras().get(i).getDi()) / x0));
                 } else {
-                    esi = (this.materiais.getConcrete().getDeformacaoE0() * ((x0 - bar.getBarras().get(i).getDi()) / (x0 - this.materiais.getConcrete().getK() * H))) / 1000;
+                    esi = ((this.materiais.getConcrete().getDeformacaoE0() / 1000) * ((x0 - bar.getBarras().get(i).getDi()) / (x0 - this.materiais.getConcrete().getK() * H)));
                 }
             }
-            esi = esi * (1);
-            bar.getBarras().get(i).setDefbarra((esi));
-            bar.getBarras().get(i).setTensao(this.materiais.getAco().getEcs());
+            bar.getBarras().get(i).setDefbarra(esi);
+            bar.getBarras().get(i).setTensao(esi*(this.materiais.getAco().getEcs()/10));
             System.out.println(" ");
             System.out.println("deformaçao Esi: " + esi);
             System.out.println("tensao: " + bar.getBarras().get(i).getTensaoBarra());
@@ -396,6 +467,8 @@ public class LinhaNeutra {
         for (int j = 0; j < secRot.getBars().getBarras().size(); j++) {
             float ys = secRot.getBars().getBarras().get(j).getY();
             secRot.getBars().getBarras().get(j).setDi(ymax - ys);
+            System.out.println("");
+            System.out.println("di barra: " + secRot.getBars().getBarras().get(j).getDi());
         }
         float da = 0;
         for (barra b : secRot.getBars().getBarras()) {
@@ -483,6 +556,13 @@ public class LinhaNeutra {
      */
     public float getX0() {
         return X0;
+    }
+
+    /**
+     * @return the alfa
+     */
+    public float getAlfa() {
+        return alfa;
     }
 
 }
