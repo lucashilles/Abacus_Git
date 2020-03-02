@@ -32,11 +32,12 @@ import views.secaoDraw;
 public class secaoDrawController {
 
     private Barras bars = new Barras();
-    private areaDesenho draw;
+    private areaDesenho draw =null;
     private secaoTransversal sec = new secaoTransversal();
-    private secaoDraw secView;
+    private secaoDraw secView = null;
     private JDialog frame; //Alterado para JDialog para fazer o controle por modais
-    private JFrame parent;
+    private JFrame parent= null;
+    private secaoTransversal secEnviar;
 
     public secaoDrawController(JFrame parent) {
         this.parent = parent;
@@ -45,17 +46,25 @@ public class secaoDrawController {
         init();
     }
 
-    
     /**
      * Retorna a seção armazenada neste objeto
-     * 
+     *
      * @return secaoTranversal gerada nesta tela
      */
     public secaoTransversal getSec() {
         return sec;
     }
 
+    public Barras getBars() {
+        return bars;
+    }
+
+    public JDialog getFrame() {
+        return frame;
+    }
+
     private void init() {
+        secView.getBtnCreateSec().addActionListener(e -> createSection());
         secView.getBtnRemake().addActionListener(e -> remake());
         secView.getBtnDiscardBar().addActionListener(e -> discardBars(e));
         secView.getBtnEditBar().addActionListener(e -> editBar(e));
@@ -67,6 +76,7 @@ public class secaoDrawController {
         secView.getBtnAddV().addActionListener(e -> add(e));
         secView.getTxtArea().setEnabled(false);
         secView.getTxtCentroide().setEnabled(false);
+
         frame = new JDialog(parent, "Desenho da seção transversal");
         secView.getJPanelAreaDraw().setLayout(new BorderLayout());
         secView.getJPanelAreaDraw().add(draw, BorderLayout.CENTER);
@@ -75,21 +85,22 @@ public class secaoDrawController {
         frame.pack();
         frame.setIconImage(parent.getIconImage());
         frame.setLocationRelativeTo(parent);
-        
+
         //Torna esta janela um modal, bloqueando a linha de execução da tela inicial
         frame.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-        
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent evt) {
                 if (JOptionPane.showConfirmDialog(frame, "Tem certeza que deseja sair ?") == JOptionPane.OK_OPTION) {
+                    
                     frame.setVisible(false);
                     parent.setVisible(true);
                 }
             }
         });
-        
+
         parent.setVisible(false);
         frame.setVisible(true);
 
@@ -258,6 +269,28 @@ public class secaoDrawController {
             CardLayout cl = (CardLayout) secView.getJPLists().getLayout();
             cl.show(secView.getJPLists(), "entrada");
         }
+    }
+
+    private void createSection() {
+        if (sec.getVertices().size() > 2 && bars.getBarras().size() > 2 && sec.getArea() >= 360) {
+            if (JOptionPane.showConfirmDialog(frame, "Deseja criar a seção?") == JOptionPane.OK_OPTION) {
+                secEnviar = new secaoTransversal(getSec(), getBars());
+                JOptionPane.showMessageDialog(frame, "Seção criada!");
+                frame.setVisible(false);
+                parent.setVisible(true);
+            }
+
+        } else {
+           
+            JOptionPane.showMessageDialog(frame, "Seção inválida! Verifique a quantidade de vértices e barras e a area da seção", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * @return the secEnviar
+     */
+    public secaoTransversal getSecEnviar() {
+        return secEnviar;
     }
 
 }

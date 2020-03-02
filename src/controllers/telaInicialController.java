@@ -5,6 +5,9 @@
  */
 package controllers;
 
+import entites.Esforcos;
+import entites.Materials;
+import entites.NeutralLine;
 import entites.secaoTransversal;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -19,20 +22,34 @@ import views.telaInicial;
  * @author Administrador
  */
 public class telaInicialController {
-
-    private JFrame parent, frame;
-    private telaInicial tela;
+    
+    private Materials materiais;
+    private JFrame parent = null, frame;
+    private telaInicial tela = null;
     private secaoTransversal secaoTransversal;
+    private Esforcos esforcos;
+    private Esforcos esforcosCalculo;
+    // private Barras barras;
 
     public telaInicialController(JFrame parent) {
         this.parent = parent;
         tela = new telaInicial();
         init();
-
+        
     }
-
+    
     private void init() {
+        
+        tela.getBtnAbaco().addActionListener(e -> metodoIterativo());
+        tela.getBtnConfig().addActionListener(e -> lancarCoeficientes());
+        tela.getBtnProp().addActionListener(e -> lancarMateriais());
+        tela.getBtnEsforcos().addActionListener(e -> lancarEsforcos());
         tela.getBtnSecao().addActionListener(e -> abrirSecao(e));
+        tela.getBtnEsforcos().setEnabled(false);
+        //tela.getBtnProp().setEnabled(false);
+        tela.getBtnConfig().setEnabled(false);
+        //tela.getBtnAbaco().setEnabled(false);
+        tela.getBtnResults().setEnabled(false);
         frame = new JFrame(parent.getTitle());
         frame.add(tela);
         frame.pack();
@@ -40,7 +57,7 @@ public class telaInicialController {
         frame.setLocationRelativeTo(parent);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
-
+            
             @Override
             public void windowClosing(WindowEvent e) {
                 if (JOptionPane.showConfirmDialog(getFrame(), "Tem certeza que deseja sair?") == JOptionPane.OK_OPTION) {
@@ -49,16 +66,33 @@ public class telaInicialController {
                 }
             }
         });
-        getFrame().setVisible(true);
+        frame.setVisible(true);
+        
     }
-
+    
     private void abrirSecao(ActionEvent e) {
         secaoDrawController sdc = new secaoDrawController(frame);
+
 //      Devido a alteração da sdc para modal, a execução desta função só
 //      irá continuar após ao fechamento do sdc, o que possibilita obter a
 //      seção gerada lá.
-        secaoTransversal = sdc.getSec();
-        System.out.println("Qtd de vertices: " + secaoTransversal.getNumVertice());
+        if (sdc.getSecEnviar() == null) {
+            tela.getBtnEsforcos().setEnabled(false);
+            
+        } else {
+            tela.getBtnEsforcos().setEnabled(true);
+            secaoTransversal = sdc.getSecEnviar();
+
+            // Apenas para verificar se esta tudo certo! apos o termino do programa, será removido
+            System.out.println("Qtd de vertices: " + secaoTransversal.getNumVertice());
+            System.out.println("QTS de barras: " + secaoTransversal.getNumBars());
+            System.out.println("centroide: " + secaoTransversal.getCentroide().getX() + ", " + secaoTransversal.getCentroide().getY());
+            System.out.println("AREA: " + secaoTransversal.getArea());
+            System.out.println("BArs AREA: " + secaoTransversal.getBars().getAreaBars());
+
+            //tela.getBtnSecao().setEnabled(false);
+        }
+        
     }
 
     /**
@@ -67,5 +101,56 @@ public class telaInicialController {
     public JFrame getFrame() {
         return frame;
     }
+    
+    private void lancarEsforcos() {
+        LancaEsforcosController lec = new LancaEsforcosController(frame);
+        if (lec.getEsforcos() != null) {
+            esforcos = lec.getEsforcos();
+            System.out.println("Esforcos: " + esforcos.getMxk());
+        }
+    }
+    
+    private void lancarMateriais() {
+        MateriaisController mc = new MateriaisController(frame);
+        if (mc.getMateriais() != null) {
+            materiais = mc.getMateriais();
+            // apenas verificaçoes de funcionamento do code
+            System.out.println("Def: " + materiais.getConcrete().getDeformacaoE0() + " eu: " + materiais.getConcrete().getDeformacaoEu());
+            //materiais.getConcrete().setFcd((float) 1.4);
+            System.out.println("fcd: " + materiais.getConcrete().getFcd());
+            
+            System.out.println("SigmaCD: " + materiais.getConcrete().getSigmacd());
+            System.out.println("Concreto fck: " + materiais.getConcrete().getFck() + ", " + "Aço: " + materiais.getAco().getTypeAco() + "Ecs: " + materiais.getConcrete().getModuloElasticidade());
+            tela.getBtnConfig().setEnabled(true);
+        }
+        
+    }
 
+    // terminar o code implemetation
+    private void lancarCoeficientes() {
+        CoeficientesViewController CVC = new CoeficientesViewController(frame, materiais);
+        this.materiais.setCoeficiente(CVC.getCoeficientes());
+        this.materiais.getAco().setFyd((float) materiais.getCoef().getGamaS());
+        this.materiais.getConcrete().setFcd((float) this.materiais.getCoef().getGamaC());
+        this.materiais.getConcrete().setSigmaCD();
+        
+        this.materiais.getAco().setDefAco(CVC.getEuAco());
+        this.esforcosCalculo = new Esforcos((float) (esforcos.getMxk() * materiais.getCoef().getGamaEsforcos()), (float) (esforcos.getMyk() * materiais.getCoef().getGamaEsforcos()), (float) (esforcos.getNk() * materiais.getCoef().getGamaEsforcos()));
+        
+        System.out.println("Fyd: " + materiais.getAco().getFyd());
+        // testando code
+        System.out.println("SigmaCD : " + materiais.getConcrete().getSigmacd());
+    }
+    
+    private void metodoIterativo() {
+        NeutralLine nl = new NeutralLine(this.secaoTransversal, this.esforcosCalculo, this.materiais);
+        nl.envoltoria(0, 360, this.secaoTransversal.getBars().getAreaBars());
+    }
+
+    /**
+     * @return the esforcosCalculo
+     */
+    public Esforcos getEsforcosCalculo() {
+        return esforcosCalculo;
+    }
 }

@@ -12,7 +12,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
+import java.awt.Shape;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import jdk.nashorn.internal.objects.Global;
@@ -33,43 +36,58 @@ public class areaDesenho extends javax.swing.JPanel {
 
         setBackground(Color.black);
     }
+
     @Override
-    public void setPreferredSize(Dimension dimension){
-    this.setSize(new Dimension((int)(getZoom()*this.getSize().getWidth()),(int)(getZoom()*this.getSize().getHeight())));
-    revalidate();
-    repaint();
-    
+    public void setPreferredSize(Dimension dimension) {
+        this.setSize(new Dimension((int) (getZoom() * this.getSize().getWidth()), (int) (getZoom() * this.getSize().getHeight())));
+        revalidate();
+        repaint();
+
     }
+
     public void Zoom(double s) {
-        this.zoom += s*0.1 ;
-        System.out.println("z: "+ getZoom());
-   
-        
+        this.zoom += s * 0.1;
+        System.out.println("z: " + getZoom());
+
         revalidate();
         repaint();
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return (new Dimension((int)getZoom()*600,  (int)getZoom()*400));
+        return (new Dimension((int) getZoom() * 600, (int) getZoom() * 400));
     }
 
     private void drawLines(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
         for (int i = 1; i < vertices.size(); i++) {
             Vertice v1 = vertices.get(i - 1);
             Vertice v2 = vertices.get(i);
-            g.drawLine(Math.round((int)getZoom()*v1.getX()), (int)getZoom()*Math.round(v1.getY()) * (-1),(int)getZoom()* Math.round(v2.getX()), (int)getZoom()*Math.round(v2.getY()) * (-1));
+            //g.drawLine(Math.round((int)getZoom()*v1.getX()), (int)getZoom()*Math.round(v1.getY()) * (-1),(int)getZoom()* Math.round(v2.getX()), (int)getZoom()*Math.round(v2.getY()) * (-1));
+            g2.draw(new Line2D.Float((float) (getZoom() * v1.getX()), (float) getZoom() * v1.getY() * (-1), (float) (getZoom() * v2.getX()), (float) getZoom() * v2.getY() * (-1)));
+
         }
 
         Vertice fim = vertices.get(vertices.size() - 1);
         Vertice inicio = vertices.get(0);
 
-        g.drawLine((int) Math.round((int)getZoom()*fim.getX()),  (int)getZoom()*Math.round(fim.getY() * (-1)),(int)getZoom()*Math.round(inicio.getX()),(int)getZoom()* Math.round(inicio.getY()) * (-1));
+        // g.drawLine((int) Math.round(getZoom()*fim.getX()),  (int)getZoom()*Math.round(fim.getY() * (-1)),(int)getZoom()*Math.round(inicio.getX()),(int)getZoom()* Math.round(inicio.getY()) * (-1));
+        g2.draw(new Line2D.Float((float) (getZoom() * fim.getX()), (float) getZoom() * fim.getY() * (-1), (float) (getZoom() * inicio.getX()), (float) getZoom() * inicio.getY() * (-1)));
+    }
+
+    private void drawLinesCG(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.draw(new Line2D.Float((float) (getZoom() * centroide.getX()), 0, (float) (getZoom() * centroide.getX()), -getHeight()));
+        g2.draw(new Line2D.Float((float) (getZoom() * centroide.getX()), 0, (float) (getZoom() * centroide.getX()), +getHeight()));
+        g2.draw(new Line2D.Float((float) -getWidth(), (float) (getZoom() * centroide.getY() * (-1)), (float) +getWidth(), (float) ((-1) * getZoom() * centroide.getY())));
     }
 
     private void drawPoint(Graphics g, float x, float y) {
-        g.fillOval((int) getZoom()*Math.round(x)-1, (1+((int) getZoom()* Math.round(y)))*(-1), 2, 2);
+        Graphics2D g2 = (Graphics2D) g;
+        Shape circle = new Arc2D.Float((float) (getZoom() * x) - 1, (float) (getZoom() * y * (-1)) - 1, 2, 2, 0, 360, Arc2D.CHORD);
+        g2.fill(circle);
 
+        //g.fillOval((int) getZoom()*Math.round(x)-1, (1+((int) getZoom()* Math.round(y)))*(-1), 2, 2);
     }
 
     private void updateCentro() {
@@ -101,14 +119,16 @@ public class areaDesenho extends javax.swing.JPanel {
         if (v.size() > 1) {
             updateCentro();
         }
-        revalidate();
+
         repaint();
+        validate();
     }
-    public void updateBarsList(List<barra> b){
+
+    public void updateBarsList(List<barra> b) {
         bars = b;
         repaint();
         revalidate();
-        
+
     }
 
     public Vertice getCentro() {
@@ -122,10 +142,9 @@ public class areaDesenho extends javax.swing.JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
- 
-      
+
         Graphics2D g2 = (Graphics2D) g;
-        
+
         if (centro != null) {
             g.translate(((int) centro.getX() - getWidth() / 2) * (-1), getHeight() - ((int) centro.getY() - getHeight() / 2) * (-1));
         } else {
@@ -133,30 +152,44 @@ public class areaDesenho extends javax.swing.JPanel {
         }
         g2.scale(getZoom(), getZoom());
         drawOrigem(g);
-        
-        g.setColor(Color.cyan);
+
+        g2.setColor(Color.cyan);
         if (vertices.size() > 0) {
-            drawLines(g);
+            if (vertices.size() > 1) {
+                drawLines(g);
+            } else {
+                g2.setColor(Color.cyan);
+                for (Vertice v : vertices) {
+                    drawPoint(g, v.getX(), v.getY());
+
+                }
+            }
             g2.setColor(Color.cyan);
             for (Vertice v : vertices) {
                 drawPoint(g, v.getX(), v.getY());
 
             }
+            drawLines(g);
+
         }
 
         if (centroide != null) {
-            if(vertices.size()> 2){
-            g2.setColor(Color.green);
-            drawPoint(g, centroide.getX(), centroide.getY());
+            if (vertices.size() > 2) {
+                
+                g2.setColor(Color.lightGray);
+                drawLinesCG(g);
+                g2.setColor(Color.green);
+                drawPoint(g, centroide.getX(), centroide.getY());
+
+            }
         }
-        }
-        if(bars.size() > 0){
+        if (bars.size() > 0) {
             g2.setColor(Color.gray);
-            for( barra b : bars){
+            for (barra b : bars) {
                 drawPoint(g, b.getX(), b.getY());
             }
         }
-        
+
         validate();
 
     }

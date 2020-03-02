@@ -25,6 +25,26 @@ public class telaInicial extends javax.swing.JPanel {
         return btnSecao;
     }
 
+    public JButton getBtnEsforcos() {
+        return btnEsforcos;
+    }
+
+    public JButton getBtnProp() {
+        return btnProp;
+    }
+
+    public JButton getBtnConfig() {
+        return btnConfig;
+    }
+
+    public JButton getBtnAbaco() {
+        return btnAbaco;
+    }
+
+    public JButton getBtnResults() {
+        return btnResults;
+    }
+
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(600, 400);

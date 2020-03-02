@@ -11,9 +11,12 @@ package entites;
  */
 public class barra {
 
+    private float di;
     private float diametro = 0f;
     private float x, y;
     private float area = 0f;
+    private float defbarra = 0f;
+    private float tensaoBarra = 0f;
 
     public barra(float diametro, float x, float y) {
         this.diametro = diametro;
@@ -22,11 +25,18 @@ public class barra {
         this.y = y;
 
     }
-    private void areaBar(){
+
+    public void setTensao(float tensao) {
+            this.tensaoBarra = tensao;
+           
+       
+    }
+
+    private void areaBar() {
         float aux;
-        aux = (float) (Math.pow((diametro / 2),2)*Math.PI);
+        aux = (float) (Math.pow((diametro / 2), 2) * Math.PI);
         this.area = aux;
-        System.out.println("AREA: "+ this.getArea());
+        System.out.println("AREA: " + this.getArea());
     }
 
     /**
@@ -77,6 +87,41 @@ public class barra {
      */
     public void setY(float y) {
         this.y = y;
+    }
+
+    /**
+     * @return the di
+     */
+    public float getDi() {
+        return di;
+    }
+
+    /**
+     * @param di the di to set
+     */
+    public void setDi(float di) {
+        this.di = di;
+    }
+
+    /**
+     * @return the defbarra
+     */
+    public float getDefbarra() {
+        return defbarra;
+    }
+
+    /**
+     * @param defbarra the defbarra to set
+     */
+    public void setDefbarra(float defbarra) {
+        this.defbarra = defbarra;
+    }
+
+    /**
+     * @return the tensaoBarra
+     */
+    public float getTensaoBarra() {
+        return tensaoBarra;
     }
 
 }

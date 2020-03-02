@@ -46,7 +46,7 @@ public class mainFrameController {
     }
     private void Start(ActionEvent e){
        
-     telaInicialController tic = new telaInicialController(mf);;
+     telaInicialController tic = new telaInicialController(mf);
      
      mf.setVisible(false);
     
