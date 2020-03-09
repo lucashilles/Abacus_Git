@@ -61,7 +61,8 @@ public class editBar extends javax.swing.JPanel {
         txtCy = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(0, 51, 51));
+        setBackground(new java.awt.Color(65, 63, 65));
+        setForeground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N

@@ -43,57 +43,59 @@ public class mainFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(204, 204, 204));
+        setForeground(new java.awt.Color(60, 63, 65));
         setIconImage(Toolkit.getDefaultToolkit().getImage((this.getClass().getClassLoader().getResource("icons/Icone.png"))));
         setSize(new java.awt.Dimension(400, 300));
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setBackground(new java.awt.Color(65, 63, 65));
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Bem vindo ao Ábacus - Desenvolvido por: Henrique Smith");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel1.setOpaque(true);
         jLabel1.setPreferredSize(new java.awt.Dimension(400, 30));
         getContentPane().add(jLabel1, java.awt.BorderLayout.SOUTH);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 51), new java.awt.Color(0, 51, 51)));
+        jPanel1.setBackground(new java.awt.Color(65, 63, 65));
+        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(60, 63, 65), new java.awt.Color(60, 63, 65)));
+        jPanel1.setForeground(new java.awt.Color(60, 63, 65));
+        jPanel1.setOpaque(false);
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 40));
         jPanel1.setLayout(new java.awt.GridLayout(1, 3));
 
-        btnNew.setBackground(new java.awt.Color(255, 255, 255));
+        btnNew.setBackground(new java.awt.Color(65, 63, 65));
+        btnNew.setForeground(new java.awt.Color(0, 0, 0));
         btnNew.setText("Novo ábaco");
-        btnNew.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.black, null, java.awt.Color.black));
-        btnNew.setBorderPainted(false);
-        btnNew.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNew.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnNew.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnNew.setPreferredSize(new java.awt.Dimension(30, 130));
         jPanel1.add(btnNew);
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setBackground(new java.awt.Color(65, 63, 65));
+        jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("Contato");
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.black, null, java.awt.Color.black));
-        jButton2.setBorderPainted(false);
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton2.setPreferredSize(new java.awt.Dimension(30, 130));
         jPanel1.add(jButton2);
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setBackground(new java.awt.Color(65, 63, 65));
+        jButton3.setForeground(new java.awt.Color(0, 0, 0));
         jButton3.setText("Sobre");
-        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.black, null, java.awt.Color.black));
-        jButton3.setBorderPainted(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton3.setPreferredSize(new java.awt.Dimension(30, 130));
         jPanel1.add(jButton3);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
-        jPanel2.setBackground(new java.awt.Color(0, 51, 51));
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(65, 63, 65));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setPreferredSize(new java.awt.Dimension(400, 230));
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        jLabel2.setBackground(new java.awt.Color(0, 51, 51));
         jLabel2.setFont(new java.awt.Font("RomanD", 1, 48)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("ABACUS");
         jPanel2.add(jLabel2, new java.awt.GridBagConstraints());

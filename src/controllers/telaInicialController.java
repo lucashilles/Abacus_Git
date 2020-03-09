@@ -45,11 +45,6 @@ public class telaInicialController {
         tela.getBtnProp().addActionListener(e -> lancarMateriais());
         tela.getBtnEsforcos().addActionListener(e -> lancarEsforcos());
         tela.getBtnSecao().addActionListener(e -> abrirSecao(e));
-        tela.getBtnEsforcos().setEnabled(false);
-        //tela.getBtnProp().setEnabled(false);
-        tela.getBtnConfig().setEnabled(false);
-        //tela.getBtnAbaco().setEnabled(false);
-        tela.getBtnResults().setEnabled(false);
         frame = new JFrame(parent.getTitle());
         frame.add(tela);
         frame.pack();
@@ -73,9 +68,6 @@ public class telaInicialController {
     private void abrirSecao(ActionEvent e) {
         secaoDrawController sdc = new secaoDrawController(frame);
 
-//      Devido a alteração da sdc para modal, a execução desta função só
-//      irá continuar após ao fechamento do sdc, o que possibilita obter a
-//      seção gerada lá.
         if (sdc.getSecEnviar() == null) {
             tela.getBtnEsforcos().setEnabled(false);
             
@@ -90,7 +82,7 @@ public class telaInicialController {
             System.out.println("AREA: " + secaoTransversal.getArea());
             System.out.println("BArs AREA: " + secaoTransversal.getBars().getAreaBars());
 
-            //tela.getBtnSecao().setEnabled(false);
+            
         }
         
     }
@@ -116,7 +108,7 @@ public class telaInicialController {
             materiais = mc.getMateriais();
             // apenas verificaçoes de funcionamento do code
             System.out.println("Def: " + materiais.getConcrete().getDeformacaoE0() + " eu: " + materiais.getConcrete().getDeformacaoEu());
-            //materiais.getConcrete().setFcd((float) 1.4);
+
             System.out.println("fcd: " + materiais.getConcrete().getFcd());
             
             System.out.println("SigmaCD: " + materiais.getConcrete().getSigmacd());
@@ -128,6 +120,7 @@ public class telaInicialController {
 
     // terminar o code implemetation
     private void lancarCoeficientes() {
+        if(this.materiais != null){
         CoeficientesViewController CVC = new CoeficientesViewController(frame, materiais);
         this.materiais.setCoeficiente(CVC.getCoeficientes());
         this.materiais.getAco().setFyd((float) materiais.getCoef().getGamaS());
@@ -140,11 +133,13 @@ public class telaInicialController {
         System.out.println("Fyd: " + materiais.getAco().getFyd());
         // testando code
         System.out.println("SigmaCD : " + materiais.getConcrete().getSigmacd());
+    } else{
+        
+        }
     }
     
     private void metodoIterativo() {
-        NeutralLine nl = new NeutralLine(this.secaoTransversal, this.esforcosCalculo, this.materiais);
-        nl.envoltoria(0, 360, this.secaoTransversal.getBars().getAreaBars());
+        abacoViewController avc = new abacoViewController(parent,this.secaoTransversal,this.esforcosCalculo,this.materiais);
     }
 
     /**

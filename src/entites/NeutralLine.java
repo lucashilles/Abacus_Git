@@ -8,6 +8,7 @@ package entites;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  *
  * @author Administrador
@@ -34,7 +35,9 @@ public class NeutralLine {
 
     }
 
-    public void envoltoria(float a1, float a2, float atb) {
+
+    //Metodo que retorna a envoltória e momentos resistentes de acordo com uma determinada area de aço e Esforco normal
+    public List<Esforcos> envoltoria(float a1, float a2, float atb, float Nd) {
         float a;
         List<Esforcos> moR = new ArrayList<>();
         a = a1;
@@ -42,19 +45,11 @@ public class NeutralLine {
         b = a2;
         float ln;
         for (float i = a; i < b; i++) {
-            ln = bissecant(0, 1000, i, atb);
+            ln = bissecant(0, 1000, i, atb, Nd);
             moR.add(moments(ln, i, atb));
 
         }
-        System.out.println(" mx");
-        for (int i = 0; i < moR.size(); i++) {
-            System.out.println(String.format("%.2f", moR.get(i).getMxk()));
-        }
-        System.out.println(" My");
-        for (int i = 0; i < moR.size(); i++) {
-            System.out.println(String.format("%.2f", moR.get(i).getMyk()));
-        }
-
+        return moR;
     }
 
     private Esforcos moments(float x0, float alfa, float atb) {
@@ -66,7 +61,8 @@ public class NeutralLine {
         secaoTransversal secUnrot;
         Vertice staticsMoments;
         secRotate = rotate(this.secT, alfa);
-        domi = verifyDomain(x0, secT.getD(), secT.getH());
+        //mudei aqui
+        domi = verifyDomain(x0, secRotate.getD(), secRotate.getH());
         deformacao(domi, secRotate, x0);
         secVCC = ACC(secRotate, x0);
         Acc = secVCC.getArea();//cm²
@@ -75,48 +71,50 @@ public class NeutralLine {
         Resistentes = equacoesEquilibrio(Acc, this.matRecebido, staticsMoments, atb, secRotate, this.secT);
         return Resistentes;
     }
+// metodo da bissecant pr encontar a profundidade da lina neutra de acordo com um angulo alfa
 
-    private float bissecant(float a, float b, float angulo, float atb) {
+    private float bissecant(float a, float b, float angulo, float atb, float Nd) {
         float xLn;
         float e0 = a;
         float eu = b;
         float f_0;
-        f_0 = comecar(e0, angulo, atb);
+        f_0 = comecar(e0, angulo, atb, Nd);
         float f_u;
-        f_u = comecar(eu, angulo, atb);
+        f_u = comecar(eu, angulo, atb, Nd);
         while ((f_0 * f_u) > 0) {
             e0 = eu;
             eu = eu * 10;
-            f_0 = comecar(e0, angulo, atb);
-            f_u = comecar(eu, angulo, atb);
+            f_0 = comecar(e0, angulo, atb, Nd);
+            f_u = comecar(eu, angulo, atb, Nd);
             System.out.println("intervalo avaliado " + e0 + " e " + eu);
         }
         System.out.println("");
         System.out.println("a Raiz encontar-se no intervalo " + e0 + " e " + eu);
         float e1;
-        e1 =((e0 * f_u) - (eu * f_0)) / (f_u - f_0);
+        e1 = ((e0 * f_u) - (eu * f_0)) / (f_u - f_0);
         float f_e1;
         float p;
-        f_e1 = comecar(e1, angulo, atb);
-        while (Math.abs(f_e1) > (float) 0.001) {
+        f_e1 = comecar(e1, angulo, atb, Nd);
+        while (Math.abs(f_e1) > (float) 0.0015) {
             p = (f_0 * f_e1);
             if (p > 0) {
                 e0 = e1;
-                f_0 = comecar(e0, angulo, atb);
+                f_0 = comecar(e0, angulo, atb, Nd);
             } else {
                 eu = e1;
-                f_u = comecar(eu, angulo, atb);
+                f_u = comecar(eu, angulo, atb, Nd);
             }
             e1 = ((e0 * f_u) - (eu * f_0)) / (f_u - f_0);
-            f_e1 = comecar(e1, angulo, atb);
+            f_e1 = comecar(e1, angulo, atb, Nd);
         }
         System.out.println("");
         System.out.println(" a profundidade da linha neutra é : " + e1);
         xLn = e1;
         return xLn;
     }
+// metodo utilizado para fazer todos os passos necessarios para o calculo da capacidade resistente
 
-    public float comecar(float x0, float alfa, float areaTotalBars) {
+    private float comecar(float x0, float alfa, float areaTotalBars, float Nd) {
         float f_x;
         secaoTransversal secRotate;
         dominiosDeformacao domi;
@@ -127,28 +125,29 @@ public class NeutralLine {
         Vertice staticsMoments;
 
         secRotate = rotate(this.secT, alfa);
-        domi = verifyDomain(x0, secT.getD(), secT.getH());
+        //mudei aqui em baixo
+        domi = verifyDomain(x0, secRotate.getD(), secRotate.getH());
         deformacao(domi, secRotate, x0);
         secVCC = ACC(secRotate, x0);
         Acc = secVCC.getArea();//cm²
         secUnrot = Unrotate(secVCC, alfa);
         staticsMoments = staticsMomentos(secUnrot);
         Resistentes = equacoesEquilibrio(Acc, this.matRecebido, staticsMoments, areaTotalBars, secRotate, this.secT);
-        f_x = capacidadeResistente(Resistentes, this.esfRecebidos);
+        f_x = capacidadeResistente(Resistentes, Nd);
         System.out.println("F(" + x0 + ")= " + f_x);
         return f_x;
     }
 
-    private float capacidadeResistente(Esforcos Resistentes, Esforcos solicitantes) {
+    // metodo que retorna o valor da Normal resistente  - Normal solicitante
+    private float capacidadeResistente(Esforcos Resistentes, float Nd) {
         float fx;
         float Nr = Resistentes.getNk();
-        float Ns = solicitantes.getNk();
+        float Ns = Nd;
         fx = Ns - Nr;
         return fx;
-
     }
 
-    // terminar
+    // Metodo que retorna os esforços de equilibrio da  peça
     private Esforcos equacoesEquilibrio(float acc, Materials concreto, Vertice staticsM, float atotalBarra, secaoTransversal secRo, secaoTransversal secTransl) {
         Esforcos esf;
         //cm²
@@ -332,7 +331,6 @@ public class NeutralLine {
 
     private dominiosDeformacao verifyDomain(float x0, float d, float h) {
         dominiosDeformacao dom;
-
         if (x0 >= 0 && x0 <= (this.dLim * d)) {
             dom = dominiosDeformacao.DOMINIO_2;
         } else if (x0 >= this.dLim * d && x0 <= h) {

@@ -117,18 +117,19 @@ public class LancaEsforcos extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(240, 220));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(65, 63, 65));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 50));
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 15));
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Esforços solicitantes característicos");
         jPanel1.add(jLabel8);
 
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
-        jPanel3.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel3.setBackground(new java.awt.Color(65, 63, 65));
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
@@ -184,7 +185,7 @@ public class LancaEsforcos extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
         jPanel3.add(txtNK, gridBagConstraints);
 
-        btnLancar.setBackground(new java.awt.Color(153, 255, 153));
+        btnLancar.setBackground(new java.awt.Color(69, 73, 74));
         btnLancar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         btnLancar.setText("Lançar esforços ");
         gridBagConstraints = new java.awt.GridBagConstraints();

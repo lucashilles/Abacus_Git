@@ -15,7 +15,6 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import jdk.nashorn.internal.objects.Global;
@@ -34,7 +33,7 @@ public class areaDesenho extends javax.swing.JPanel {
 
     public areaDesenho() {
 
-        setBackground(Color.black);
+        setBackground(new Color(187, 187, 187));
     }
 
     @Override
@@ -63,15 +62,12 @@ public class areaDesenho extends javax.swing.JPanel {
         for (int i = 1; i < vertices.size(); i++) {
             Vertice v1 = vertices.get(i - 1);
             Vertice v2 = vertices.get(i);
-            //g.drawLine(Math.round((int)getZoom()*v1.getX()), (int)getZoom()*Math.round(v1.getY()) * (-1),(int)getZoom()* Math.round(v2.getX()), (int)getZoom()*Math.round(v2.getY()) * (-1));
             g2.draw(new Line2D.Float((float) (getZoom() * v1.getX()), (float) getZoom() * v1.getY() * (-1), (float) (getZoom() * v2.getX()), (float) getZoom() * v2.getY() * (-1)));
 
         }
 
         Vertice fim = vertices.get(vertices.size() - 1);
         Vertice inicio = vertices.get(0);
-
-        // g.drawLine((int) Math.round(getZoom()*fim.getX()),  (int)getZoom()*Math.round(fim.getY() * (-1)),(int)getZoom()*Math.round(inicio.getX()),(int)getZoom()* Math.round(inicio.getY()) * (-1));
         g2.draw(new Line2D.Float((float) (getZoom() * fim.getX()), (float) getZoom() * fim.getY() * (-1), (float) (getZoom() * inicio.getX()), (float) getZoom() * inicio.getY() * (-1)));
     }
 
@@ -87,7 +83,6 @@ public class areaDesenho extends javax.swing.JPanel {
         Shape circle = new Arc2D.Float((float) (getZoom() * x) - 1, (float) (getZoom() * y * (-1)) - 1, 2, 2, 0, 360, Arc2D.CHORD);
         g2.fill(circle);
 
-        //g.fillOval((int) getZoom()*Math.round(x)-1, (1+((int) getZoom()* Math.round(y)))*(-1), 2, 2);
     }
 
     private void updateCentro() {
@@ -153,18 +148,18 @@ public class areaDesenho extends javax.swing.JPanel {
         g2.scale(getZoom(), getZoom());
         drawOrigem(g);
 
-        g2.setColor(Color.cyan);
+        g2.setColor(Color.red);
         if (vertices.size() > 0) {
             if (vertices.size() > 1) {
                 drawLines(g);
             } else {
-                g2.setColor(Color.cyan);
+                g2.setColor(Color.red);
                 for (Vertice v : vertices) {
                     drawPoint(g, v.getX(), v.getY());
 
                 }
             }
-            g2.setColor(Color.cyan);
+            g2.setColor(Color.red);
             for (Vertice v : vertices) {
                 drawPoint(g, v.getX(), v.getY());
 
@@ -173,18 +168,16 @@ public class areaDesenho extends javax.swing.JPanel {
 
         }
 
-        if (centroide != null) {
-            if (vertices.size() > 2) {
-                
-                g2.setColor(Color.lightGray);
-                drawLinesCG(g);
-                g2.setColor(Color.green);
-                drawPoint(g, centroide.getX(), centroide.getY());
-
-            }
-        }
+      //  if (centroide != null) {
+        //  if (vertices.size() > 2) {
+             //   g2.setColor(Color.lightGray);
+        //    drawLinesCG(g);
+        //    g2.setColor(Color.green);
+        //    drawPoint(g, centroide.getX(), centroide.getY());
+          //  }
+        // }
         if (bars.size() > 0) {
-            g2.setColor(Color.gray);
+            g2.setColor(Color.black);
             for (barra b : bars) {
                 drawPoint(g, b.getX(), b.getY());
             }
@@ -196,13 +189,15 @@ public class areaDesenho extends javax.swing.JPanel {
 
     private void drawOrigem(Graphics g) {
 
-        g.setColor(Color.white);
-        g.drawRect(0 - 2, 0 - 2, 4, 4);
-        g.setColor(Color.gray);
+        //  g.setColor(Color.black);
+        //g.drawRect(0 - 2, 0 - 2, 4, 4);
+        g.setColor(Color.green);
         g.drawLine(0, 0, 0, -5);
+        g.setColor(Color.red);
         g.drawLine(0, 0, 5, 0);
 
         g.setFont(new Font("Arial", 1, 6));
+        g.setColor(Color.black);
         g.drawString("(0;0)", 0, 10);
 
     }
