@@ -5,11 +5,11 @@
         <group>
             <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/application/abacus.java</file>
             <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/controllers/abacoViewController.java</file>
-            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/entites/NeutralLine.java</file>
             <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/views/abacoView.java</file>
+            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/views/progressDialog.java</file>
+            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/entites/NeutralLine.java</file>
+            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/controllers/telaInicialController.java</file>
             <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/views/grafico.java</file>
-            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/controllers/secaoDrawController.java</file>
-            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/views/secaoDraw.java</file>
         </group>
     </open-files>
 </project-private>

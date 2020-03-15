@@ -5,9 +5,12 @@
  */
 package entites;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import views.progressDialog;
 
 /**
  *
@@ -15,6 +18,8 @@ import java.util.List;
  */
 public class NeutralLine {
 
+    JFrame parent;
+    progressDialog PD;
     private final secaoTransversal secRecebida;
     private secaoTransversal secT = null;
     private final Esforcos esfRecebidos;
@@ -23,8 +28,10 @@ public class NeutralLine {
     private float dLim = 0;
     private float defLim = 0;
     private float lambda = 0;
+    private static int prog = 0;
 
-    public NeutralLine(secaoTransversal secEntrada, Esforcos esfEntrada, Materials matEntrada) {
+    public NeutralLine(JFrame parent, secaoTransversal secEntrada, Esforcos esfEntrada, Materials matEntrada) {
+        this.parent = parent;
         this.secRecebida = secEntrada;
         this.esfRecebidos = esfEntrada;
         this.matRecebido = matEntrada;
@@ -35,6 +42,16 @@ public class NeutralLine {
 
     }
 
+    public List<Esforcos> FC_N_ENV(float Nd, float atb, float alfa1) {
+        float xLN;
+        float alfa = alfa1;
+        List<Esforcos> moR = new ArrayList<>();
+        xLN = bissecant(0, 1000, alfa, atb, Nd);
+        for (float i = 0; i < 360; i++) {
+            moR.add(moments(xLN, alfa, atb));
+        }
+        return moR;
+    }
 
     //Metodo que retorna a envoltória e momentos resistentes de acordo com uma determinada area de aço e Esforco normal
     public List<Esforcos> envoltoria(float a1, float a2, float atb, float Nd) {
@@ -44,11 +61,26 @@ public class NeutralLine {
         float b;
         b = a2;
         float ln;
+        PD = new progressDialog(parent);
+        PD.setMaximum((int) b);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+
+                PD.setVisible(true);
+                }
+        });
         for (float i = a; i < b; i++) {
+
             ln = bissecant(0, 1000, i, atb, Nd);
             moR.add(moments(ln, i, atb));
+            prog = (int) i;
+            PD.setValue(prog);
+            PD.setVisible(true);
 
         }
+
         return moR;
     }
 
@@ -95,7 +127,7 @@ public class NeutralLine {
         float f_e1;
         float p;
         f_e1 = comecar(e1, angulo, atb, Nd);
-        while (Math.abs(f_e1) > (float) 0.0015) {
+        while (Math.abs(f_e1) > (float) 0.001) {
             p = (f_0 * f_e1);
             if (p > 0) {
                 e0 = e1;
@@ -419,5 +451,12 @@ public class NeutralLine {
      */
     public float getLambda() {
         return lambda;
+    }
+
+    /**
+     * @return the prog
+     */
+    public int getProg() {
+        return prog;
     }
 }
