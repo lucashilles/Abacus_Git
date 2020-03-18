@@ -63,7 +63,7 @@ public class barADD extends javax.swing.JPanel {
         txtCoordY = new javax.swing.JTextField();
         btnLancarB = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(0, 51, 51));
+        setBackground(new java.awt.Color(65, 63, 65));
         setPreferredSize(new java.awt.Dimension(240, 150));
         setLayout(new java.awt.GridBagLayout());
 
@@ -126,10 +126,10 @@ public class barADD extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
         add(txtCoordY, gridBagConstraints);
 
-        btnLancarB.setBackground(new java.awt.Color(255, 255, 255));
         btnLancarB.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         btnLancarB.setText("Lançar barra");
-        btnLancarB.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 51), new java.awt.Color(51, 51, 0), null, null));
+        btnLancarB.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(60, 63, 65), new java.awt.Color(60, 63, 65), null, null));
+        btnLancarB.setBorderPainted(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;

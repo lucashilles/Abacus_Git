@@ -14,7 +14,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+
 
 /**
  *
@@ -158,7 +158,7 @@ public class secaoDraw extends javax.swing.JPanel {
         jPLists.setPreferredSize(new java.awt.Dimension(200, 440));
         jPLists.setLayout(new java.awt.CardLayout());
 
-        jPanelEntrada.setBackground(new java.awt.Color(0, 51, 51));
+        jPanelEntrada.setBackground(new java.awt.Color(65, 63, 65));
 
         javax.swing.GroupLayout jPanelEntradaLayout = new javax.swing.GroupLayout(jPanelEntrada);
         jPanelEntrada.setLayout(jPanelEntradaLayout);
@@ -191,12 +191,14 @@ public class secaoDraw extends javax.swing.JPanel {
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jPMenu.setBackground(new java.awt.Color(0, 51, 51));
+        jPMenu.setBackground(new java.awt.Color(65, 63, 65));
         jPMenu.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         jPMenu.setPreferredSize(new java.awt.Dimension(600, 70));
         jPMenu.setLayout(new java.awt.GridBagLayout());
 
+        btnAddV.setBackground(new java.awt.Color(69, 73, 74));
         btnAddV.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnAddV.setForeground(new java.awt.Color(255, 255, 255));
         btnAddV.setText("Adicionar vértice");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -206,7 +208,9 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPMenu.add(btnAddV, gridBagConstraints);
 
+        btnRemoveVertice.setBackground(new java.awt.Color(69, 73, 74));
         btnRemoveVertice.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnRemoveVertice.setForeground(new java.awt.Color(255, 255, 255));
         btnRemoveVertice.setText("Remover vértice");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -216,7 +220,9 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPMenu.add(btnRemoveVertice, gridBagConstraints);
 
+        btnAddBar.setBackground(new java.awt.Color(69, 73, 74));
         btnAddBar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnAddBar.setForeground(new java.awt.Color(255, 255, 255));
         btnAddBar.setText("Adicionar barra");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -225,7 +231,9 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPMenu.add(btnAddBar, gridBagConstraints);
 
+        btnRemoveBar.setBackground(new java.awt.Color(69, 73, 74));
         btnRemoveBar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnRemoveBar.setForeground(new java.awt.Color(255, 255, 255));
         btnRemoveBar.setText("Remover barra");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -234,7 +242,9 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPMenu.add(btnRemoveBar, gridBagConstraints);
 
+        btnEditBar.setBackground(new java.awt.Color(69, 73, 74));
         btnEditBar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnEditBar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditBar.setText("Editar barra");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
@@ -243,7 +253,9 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPMenu.add(btnEditBar, gridBagConstraints);
 
+        btnDiscardBar.setBackground(new java.awt.Color(69, 73, 74));
         btnDiscardBar.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnDiscardBar.setForeground(new java.awt.Color(255, 255, 255));
         btnDiscardBar.setText("Descartar barras");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -252,7 +264,9 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPMenu.add(btnDiscardBar, gridBagConstraints);
 
+        btnZoomMais.setBackground(new java.awt.Color(69, 73, 74));
         btnZoomMais.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnZoomMais.setForeground(new java.awt.Color(255, 255, 255));
         btnZoomMais.setText("Mais Zoom");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -261,7 +275,9 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPMenu.add(btnZoomMais, gridBagConstraints);
 
+        btnZoomOut.setBackground(new java.awt.Color(69, 73, 74));
         btnZoomOut.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnZoomOut.setForeground(new java.awt.Color(255, 255, 255));
         btnZoomOut.setText("Menos Zoom");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -270,7 +286,9 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPMenu.add(btnZoomOut, gridBagConstraints);
 
+        btnRemake.setBackground(new java.awt.Color(69, 73, 74));
         btnRemake.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnRemake.setForeground(new java.awt.Color(255, 255, 255));
         btnRemake.setText("Refazer tudo");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -279,7 +297,9 @@ public class secaoDraw extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPMenu.add(btnRemake, gridBagConstraints);
 
+        btnCriarSec.setBackground(new java.awt.Color(69, 73, 74));
         btnCriarSec.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btnCriarSec.setForeground(new java.awt.Color(255, 255, 255));
         btnCriarSec.setText("Criar seção");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
@@ -290,7 +310,7 @@ public class secaoDraw extends javax.swing.JPanel {
 
         jPanel2.add(jPMenu, java.awt.BorderLayout.PAGE_START);
 
-        jPanel1.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel1.setBackground(new java.awt.Color(65, 63, 65));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         jPanel1.setPreferredSize(new java.awt.Dimension(600, 30));
         jPanel1.setLayout(new java.awt.GridBagLayout());

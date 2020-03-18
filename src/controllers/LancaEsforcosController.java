@@ -19,6 +19,7 @@ import views.LancaEsforcos;
  * @author Administrador
  */
 public class LancaEsforcosController {
+
     private Esforcos esforcos;
     private LancaEsforcos view;
     private JDialog frame;
@@ -57,20 +58,26 @@ public class LancaEsforcosController {
         parent.setVisible(false);
         frame.setVisible(true);
     }
- private void lancar(){
-     float ex, ey, mx, my, nk;
-      mx = Float.parseFloat(view.getTxtMx().getText());
-      my = Float.parseFloat(view.getTxtMy().getText());
-      nk = Float.parseFloat(view.getTxtNk().getText());
-      ex= (mx/nk)*100;
-      ey = (my/nk)*100;
-      view.getTxtEx().setText(String.format("%.2f", ex));
-      view.getTxtEy().setText(String.format("%.2f", ey));
-     if(JOptionPane.showConfirmDialog(frame, view.getJPanelE()) == JOptionPane.OK_OPTION);
-     esforcos = new Esforcos(mx, my,nk);
-     frame.setVisible(false);
-     parent.setVisible(true);
- }
+
+    private void lancar() {
+        float ex, ey, mx, my, nk;
+        mx = Float.parseFloat(view.getTxtMx().getText());
+        my = Float.parseFloat(view.getTxtMy().getText());
+        if (Float.parseFloat(view.getTxtNk().getText()) != 0) {
+            nk = Float.parseFloat(view.getTxtNk().getText());
+            ex = (mx / nk) * 100;
+            ey = (my / nk) * 100;
+            view.getTxtEx().setText(String.format("%.2f", ex));
+            view.getTxtEy().setText(String.format("%.2f", ey));
+            if (JOptionPane.showConfirmDialog(frame, view.getJPanelE()) == JOptionPane.OK_OPTION);
+            esforcos = new Esforcos(mx, my, nk);
+            frame.setVisible(false);
+            parent.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(frame, "A normal deve ser um valor diferente de zero!");
+        }
+
+    }
 
     /**
      * @return the esforcos

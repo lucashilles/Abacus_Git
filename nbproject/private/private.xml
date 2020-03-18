@@ -4,13 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/application/abacus.java</file>
+            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/controllers/abacoViewController.java</file>
             <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/views/abacoView.java</file>
-            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/entites/Esforcos.java</file>
-            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/entites/LinhaNeutra.java</file>
-            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/entites/barra.java</file>
-            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/controllers/telaInicialController.java</file>
-            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/entites/secaoTransversal.java</file>
+            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/views/progressDialog.java</file>
             <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/entites/NeutralLine.java</file>
+            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/controllers/telaInicialController.java</file>
+            <file>file:/C:/Users/Administrador/Documents/Engenharia%20Civil/Disciplinas/TCC/abacus_clone/Abacus_Git/src/views/grafico.java</file>
         </group>
     </open-files>
 </project-private>

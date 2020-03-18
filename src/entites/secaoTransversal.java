@@ -23,6 +23,7 @@ public class secaoTransversal {
     private Barras bars;
     private float h, d;
     private float ymax;
+    private float hx;
 
     public secaoTransversal() {
 
@@ -41,7 +42,20 @@ public class secaoTransversal {
     private void gerarParametros(secaoTransversal s, Barras b) {
         float yMax = 0;
         float yMin = 0;
+        float xMax = 0;
+        float xMin = 0;
+        float xh;
         float hs;
+        for (Vertice vx : s.getVertices()) {
+            if (xMax < vx.getX()) {
+                xMax = vx.getX();
+            }
+            if (xMin > vx.getX()) {
+                xMin = vx.getX();
+            }
+        }
+        xh = xMax - xMin;
+        this.hx = xh;
         for (Vertice v : s.getVertices()) {
             if (yMax < v.getY()) {
                 yMax = v.getY();
@@ -231,6 +245,13 @@ public class secaoTransversal {
      */
     public float getyMax() {
         return ymax;
+    }
+
+    /**
+     * @return the hx
+     */
+    public float getHx() {
+        return hx;
     }
 
 }
