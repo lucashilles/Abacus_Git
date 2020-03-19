@@ -5,18 +5,19 @@
  */
 package entites;
 
-import java.lang.reflect.InvocationTargetException;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import views.progressDialog;
 
 /**
  *
  * @author Administrador
  */
-public class NeutralLine {
+public class NeutralLine implements PropertyChangeListener{
 
     JFrame parent;
     progressDialog PD;
@@ -29,6 +30,58 @@ public class NeutralLine {
     private float defLim = 0;
     private float lambda = 0;
     private static int prog = 0;
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if ("progress".equals(evt.getPropertyName())) {
+            int progress = (Integer) evt.getNewValue();
+            PD.setValue(progress);
+        } 
+    }
+    
+    class Task extends SwingWorker<Void, Void> {
+        float ln;
+        float atb;
+        float Nd;
+        float a;
+        float b;
+        List<Esforcos> moR = new ArrayList<>();
+        
+        Task(float atb, float Nd, float a, float b) {
+            this.atb = atb;
+            this.Nd = Nd;
+            this.a = a;
+            this.b = b;
+        }
+        
+        @Override
+        public Void doInBackground() {
+            //Initialize progress property.
+            float inc = 100 / (b - a);
+            setProgress(0);
+            for (float i = a; i < b; i++) {
+                System.out.println("==========================> I:" + i);
+                ln = bissecant(0, 1000, i, atb, Nd);
+                moR.add(moments(ln, i, atb));
+
+                setProgress(Math.min((int) (i * inc), 100));
+            }
+            
+            setProgress(100);
+            return null;
+        }
+
+        /*
+         * Executed in event dispatching thread
+         */
+        @Override
+        public void done() {
+            System.out.println("Done");
+            //startButton.setEnabled(true);
+            //setCursor(null); //turn off the wait cursor
+            //taskOutput.append("Done!\n");
+        }
+    }
 
     public NeutralLine(JFrame parent, secaoTransversal secEntrada, Esforcos esfEntrada, Materials matEntrada) {
         this.parent = parent;
@@ -62,25 +115,28 @@ public class NeutralLine {
         b = a2;
         float ln;
         PD = new progressDialog(parent);
-        PD.setMaximum((int) b);
+        PD.setMaximum(100);
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-
-                PD.setVisible(true);
-                }
-        });
-        for (float i = a; i < b; i++) {
-
-            ln = bissecant(0, 1000, i, atb, Nd);
-            moR.add(moments(ln, i, atb));
-            prog = (int) i;
-            PD.setValue(prog);
+//        for (float i = a; i < b; i++) {
+//
+//            ln = bissecant(0, 1000, i, atb, Nd);
+//            moR.add(moments(ln, i, atb));
+//            prog = (int) i;
+//            PD.setValue(prog);
+//            PD.setVisible(true);
+//
+//        }
+        
+        Task task = new Task(atb, Nd, a, b);
+        task.addPropertyChangeListener(this);
+        task.execute();
+        
+        while(!task.isDone()) {
             PD.setVisible(true);
-
         }
 
+        moR = task.moR;
+        
         return moR;
     }
 

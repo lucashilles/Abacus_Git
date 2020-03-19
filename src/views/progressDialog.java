@@ -10,9 +10,7 @@ import java.awt.FlowLayout;
 import java.awt.Window;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JProgressBar;
-import javax.swing.SwingUtilities;
 
 /**
  *

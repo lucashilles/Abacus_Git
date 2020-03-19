@@ -11,16 +11,11 @@ import entites.NeutralLine;
 import entites.secaoTransversal;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import views.abacoView;
 import views.grafico;
 import views.progressDialog;
@@ -39,7 +34,7 @@ public class abacoViewController {
     private JFrame frame;
     private JFrame parent = null;
     private float taxaArm, NormalReduzida;
-
+    
     public abacoViewController(JFrame parent, secaoTransversal sec, Esforcos esf, Materials mat) {
         this.sec = sec;
         this.esf = esf;
@@ -97,12 +92,12 @@ public class abacoViewController {
         NeutralLine LN = new NeutralLine(this.frame,this.sec, this.esf, this.mat);
         if (this.esf.getMxk() != 0 && this.esf.getMyk() != 0) {
             es = LN.envoltoria(0, 360, this.sec.getBars().getAreaBars(), this.esf.getNk());
-            for (Esforcos e : es) {
-                Mx.add(e.getMxk());
-                My.add(e.getMyk());
-            }
-            graf.setEspacamento(50);
-            graf.setSeries(Mx, My, this.taxaArm);
+//            for (Esforcos e : es) {
+//                Mx.add(e.getMxk());
+//                My.add(e.getMyk());
+//            }
+//            graf.setEspacamento(50);
+//            graf.setSeries(Mx, My, this.taxaArm);
         } else {
             es = LN.FC_N_ENV(this.esf.getNk(), this.sec.getBars().getAreaBars(), 0);
             for (Esforcos e : es) {

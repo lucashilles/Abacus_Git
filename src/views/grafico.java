@@ -7,7 +7,6 @@ package views;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.util.List;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
